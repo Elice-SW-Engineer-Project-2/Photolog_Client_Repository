@@ -1,8 +1,12 @@
-import { Link } from 'react-router-dom';
-import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import React, { useEffect, useState, Suspense } from 'react';
 import styled from 'styled-components';
+import { styled as styledMui } from '@mui/material/styles';
+import { Button as ButtonMui } from '@mui/material';
 import { ReactComponent as Logo } from './logo.svg';
-import SampleImage from './sample.png';
+import MapDemo from './map.gif';
+import Demo from './demo.gif';
 
 interface IButton {
   fontSize: string;
@@ -13,6 +17,10 @@ interface IContainer {
 interface ISection {
   backgroundColor: string;
 }
+interface INavigateButton {
+  backgroundColor: string;
+  hoverBackgroundColor: string;
+}
 const Button = styled.button<IButton>`
   display: flex;
   flex-direction: row;
@@ -22,28 +30,71 @@ const Button = styled.button<IButton>`
   background: #07b8b8;
   border-radius: 6px;
   border: 0px;
-  font-family: 'Noto Sans KR';
+  font-family: 'Segoe UI';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: ${(props) => props.fontSize};
   line-height: 140%;
   color: #ffffff;
   cursor: pointer;
+  :hover {
+    background-color: #00a8a7;
+  }
+`;
+const TextButton = styledMui(ButtonMui)`
+  padding: 8px 10px;
+  font-family: 'Segoe UI';
+  font-style: normal;
+  font-weight: 600;
+  font-size:20px;
+  font-family: 'Segoe UI';
+  line-height: 27px;
+  color: #2A2A2A;
+  :hover{
+    color:#07b8b8;
+  }
+`;
+const NavigateButton = styledMui(ButtonMui)<INavigateButton>`
+  width:fit-content;
+  height:fit-content;
+  padding: 12px 47px;
+  font-family: 'Segoe UI';
+  font-style: normal;
+  font-weight: 600;
+  font-size:24px;
+  font-family: 'Segoe UI';
+  line-height: 32px;
+  color: #FFFFFF;
+  background-color: ${(props) => props.backgroundColor};
+  :hover{
+    background-color: ${(props) => props.hoverBackgroundColor};
+  }
 `;
 const Container = styled.div<IContainer>`
-  height: 500vh;
   font-size: calc(10px + 3vmin);
-  background-color: #fff;
+  background-color: red;
   font-family: ${(props) => props.fontFamily};
 `;
 const Section = styled.div<ISection>`
   position: relative;
   background-color: ${(props) => props.backgroundColor};
   height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+`;
+const Section2 = styled.div<ISection>`
+  position: relative;
+  background-color: ${(props) => props.backgroundColor};
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0px 1vw;
 `;
 const Header = styled.div`
   display: flex;
@@ -51,10 +102,13 @@ const Header = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 15vh;
+  height: 66px;
   width: 100%;
+  padding: 66px 4.98vw;
 `;
 const ImageList = styled.div`
+  position: relative;
+  top: 11vh;
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -63,18 +117,26 @@ const ImageList = styled.div`
   gap: 16px;
   height: 30vh;
 `;
-const Row = styled.div`
-  position: relative;
-  z-index: 0;
-`;
 const Body = styled.div`
+  position: relative;
+  top: 2vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 30vh;
   width: 100%;
+  align-items: center;
+`;
+const Body2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 30vh;
+  align-items: center;
+  gap: 50px;
 `;
 const StyledH1 = styled.h1`
+  position: relative;
   font-size: 1.2em;
   font-family: 'Segoe UI';
   font-style: normal;
@@ -139,7 +201,7 @@ try {
     }),
   );
 } catch (e) {
-  // empty
+  console.log(e);
 }
 
 const wheelOpt = supportsPassive ? { passive: false } : false;
@@ -162,8 +224,68 @@ const debounceResizeEvent = (cb: any, delay: number) => {
     }, delay);
   };
 };
+function wrapPromise(promise: any) {
+  let status = 'pending';
+  let result: any;
+  const suspender = promise.then(
+    (r: any) => {
+      status = 'success';
+      result = r;
+    },
+    (e: any) => {
+      status = 'error';
+      result = e;
+    },
+  );
+  return {
+    read() {
+      // console.log(status);
+      if (status === 'pending') {
+        throw suspender;
+      } else if (status === 'error') {
+        throw result;
+      } else if (status === 'success') {
+        return result;
+      }
+      return undefined;
+    },
+  };
+}
+const fetcher = async (url: string) => {
+  const promiseList: any = [];
+  for (let i = 0; i < 7; i += 1) {
+    promiseList.push(
+      fetch(url)
+        .then((res) => res.blob())
+        .then(URL.createObjectURL),
+    );
+  }
+  const res = await Promise.all(promiseList);
+  // const delay = new Promise((resolve) => {
+  //   setTimeout(resolve, 5000);
+  // });
+  // await delay;
+  return res;
+};
+const useGetData = (url: string) => {
+  const [resource, setResource] = useState(null as any);
+  useEffect(() => {
+    const res = wrapPromise(fetcher(url));
+    setResource(res);
+  }, [url]);
+  return resource?.read();
+};
 const Intro = () => {
   disableScroll();
+  const objectURL = useGetData('https://picsum.photos/238/349');
+  const navigate = useNavigate();
+  const motionVariants = {
+    hover: {
+      top: '-100px',
+      scale: 3,
+      transition: { duration: 0.5 },
+    },
+  };
   window.onresize = debounceResizeEvent(
     (e: React.UIEvent<Window, 'resize'>) => {
       if (window.visualViewport) {
@@ -188,33 +310,24 @@ const Intro = () => {
       <Container className="Intro" fontFamily="Segoe UI">
         <Section backgroundColor="#ffffff">
           <Header>
-            <Link to="/home">
-              <Logo style={{ marginLeft: '4.98vw' }} />
-            </Link>
-            <Button
-              fontSize="0.5em"
-              style={{ textAlign: 'center', marginLeft: '72.5vw' }}
-              onClick={alert}
-            >
-              로그인
-            </Button>
-            <Link
-              style={{
-                fontFamily: 'Segoe UI',
-                fontStyle: 'normal',
-                fontWeight: '600',
-                fontSize: '0.5em',
-                lineHeight: '49px',
-                color: '#2A2A2A',
-                width: '104px',
-                height: '47px',
-                marginRight: '4.98vw',
-                textAlign: 'center',
+            <Logo
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                navigate('/map');
               }}
-              to="/home"
-            >
-              가입하기
-            </Link>
+            />
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <Button fontSize="20px" onClick={alert}>
+                로그인
+              </Button>
+              <TextButton
+                onClick={() => {
+                  navigate('/map');
+                }}
+              >
+                가입하기
+              </TextButton>
+            </div>
           </Header>
           <Body>
             <StyledH1 style={{ textAlign: 'center' }}>
@@ -230,30 +343,154 @@ const Intro = () => {
               .fill('')
               .map((_, idx) => {
                 let offset;
+                const key = idx;
                 if (Math.abs(idx - 3) % 3 === 0) offset = 0;
                 if (Math.abs(idx - 3) % 3 === 2) offset = 75;
                 if (Math.abs(idx - 3) % 3 === 1) offset = 75 + 65;
                 if (idx === 3) offset = 75 + 65 + 50;
                 return (
-                  <img
+                  <motion.div
+                    variants={motionVariants}
                     style={{
-                      width: '238px',
-                      height: '349.55px',
-                      transform: `translateY(${offset}px)`,
+                      position: 'relative',
+                      top: `${offset}px`,
                     }}
-                    src={SampleImage}
-                    alt=""
-                  />
+                    animate={{
+                      transform: 'translateY(-5px)',
+                      transition: {
+                        from: 'translateY(0px)',
+                        duration: 0.5,
+                        repeat: Infinity,
+                        repeatType: 'reverse',
+                      },
+                    }}
+                    whileHover="hover"
+                  >
+                    <img
+                      style={{
+                        width: '238px',
+                        height: '349.55px',
+                        borderRadius: '20px',
+                      }}
+                      key={key}
+                      src={objectURL ? objectURL[idx] : ''}
+                      alt=""
+                    />
+                  </motion.div>
                 );
               })}
           </ImageList>
+          <div
+            style={{
+              width: '100%',
+              height: '9vh',
+              zIndex: '100',
+            }}
+          >
+            <div
+              style={{
+                width: '100%',
+                height: '3vh',
+                zIndex: '100',
+                background:
+                  'linear-gradient(0deg, #FFE696 0%, rgba(255, 255, 255, 0) 34.18%)',
+              }}
+            />
+            <div
+              style={{
+                width: '100%',
+                height: '6vh',
+                backgroundColor: '#FFE696',
+                zIndex: '100',
+              }}
+            />
+          </div>
         </Section>
-        <Section backgroundColor="#FFFD92">
-          <h1>지도로 주변 명소 검색</h1>
-          <button type="button">dddd</button>
-        </Section>
-        <Section backgroundColor="#DAFFF6">ddd</Section>
-        <Section backgroundColor="#FFE2EB">ddd</Section>
+        <Section2 backgroundColor="#FFE696">
+          <Body2>
+            <StyledH1>
+              <p style={{ color: '#C52424' }}>지도로 주변 명소 검색</p>
+            </StyledH1>
+            <pre
+              style={{
+                fontSize: '0.6em',
+                color: '#C52424',
+                width: 'fit-content',
+                textAlign: 'center',
+                marginBottom: '40px',
+              }}
+            >
+              주변에 멋진 장소를 찾고있나요? 사진 찍기 좋은 장소를 찾고
+              <br />
+              친구들과 공유해 보세요.
+            </pre>
+            <NavigateButton
+              backgroundColor="#C52424"
+              hoverBackgroundColor="#A51313"
+            >
+              탐색
+            </NavigateButton>
+          </Body2>
+          <div
+            style={{
+              width: '713.59px',
+              height: '486.56px',
+              background: '#F5F5F5',
+              overflow: 'hidden',
+            }}
+          >
+            <img src={MapDemo} alt="로딩중" />
+          </div>
+        </Section2>
+        <Section2 backgroundColor="#AAE0E1">
+          <div
+            style={{
+              width: '713.59px',
+              height: '486.56px',
+              background: '#F5F5F5',
+              overflow: 'hidden',
+            }}
+          >
+            <img
+              style={{
+                position: 'relative',
+                left: '-446px',
+                top: '-296px',
+                scale: '0.5',
+              }}
+              src={Demo}
+              alt="로딩중"
+            />
+          </div>
+          <Body2>
+            <StyledH1>
+              <p style={{ color: '#0D61AE' }}>좋아하는 사진을 저장하세요</p>
+            </StyledH1>
+            <pre
+              style={{
+                fontSize: '0.6em',
+                color: '#0D61AE',
+                width: 'fit-content',
+                textAlign: 'center',
+              }}
+            >
+              나중에 다시 볼 수 있도록 좋아하는 사진을
+              <br />
+              수집하세요. 관심 있는 해쉬태그를 검색하고
+              <br />
+              좋아요를 남겨 언제든 다시 볼 수 있어요.
+            </pre>
+            <NavigateButton
+              backgroundColor="#0D61AE"
+              hoverBackgroundColor="#044F94"
+            >
+              탐색
+            </NavigateButton>
+          </Body2>
+        </Section2>
+        <Section2 backgroundColor="#FFFFFF">
+          3d interation 추후에 three.js 사용할 수 있으면 넣을 예정
+        </Section2>
       </Container>
     </>
   );
