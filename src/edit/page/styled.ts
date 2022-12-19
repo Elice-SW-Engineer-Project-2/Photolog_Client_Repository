@@ -22,14 +22,16 @@ export const Tap = styled.div<{ mode: string }>`
     text-align: center;
     width: 80px;
   }
-  span.LOGIN {
-    font-weight: ${(props) => (props.mode === 'LOGIN' ? 'bold' : 'normal')};
+  span.MYPROFILE {
+    font-weight: ${(props) => (props.mode === 'MYPROFILE' ? 'bold' : 'normal')};
   }
-  span.JOIN {
-    font-weight: ${(props) => (props.mode === 'JOIN' ? 'bold' : 'normal')};
-  }
-  span.FINDPW {
+  span.EDITPROFILE {
     width: 120px;
-    font-weight: ${(props) => (props.mode === 'FINDPW' ? 'bold' : 'normal')};
+    font-weight: ${(props) =>
+      props.mode === 'EDITPROFILE' ? 'bold' : 'normal'};
+  }
+  span.EDITPW {
+    width: 120px;
+    font-weight: ${(props) => (props.mode === 'EDITPW' ? 'bold' : 'normal')};
   }
 `;
