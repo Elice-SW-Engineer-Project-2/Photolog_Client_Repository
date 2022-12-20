@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import React, { useEffect, useState, Suspense } from 'react';
 import styled from 'styled-components';
@@ -7,6 +7,7 @@ import { Button as ButtonMui } from '@mui/material';
 import { ReactComponent as Logo } from './logo.svg';
 import MapDemo from './map.gif';
 import Demo from './demo.gif';
+import CubeContainer from './Cube';
 
 interface IButton {
   fontSize: string;
@@ -239,7 +240,6 @@ function wrapPromise(promise: any) {
   );
   return {
     read() {
-      // console.log(status);
       if (status === 'pending') {
         throw suspender;
       } else if (status === 'error') {
@@ -418,6 +418,7 @@ const Intro = () => {
                 width: 'fit-content',
                 textAlign: 'center',
                 marginBottom: '40px',
+                lineHeight: '140%',
               }}
             >
               주변에 멋진 장소를 찾고있나요? 사진 찍기 좋은 장소를 찾고
@@ -439,7 +440,15 @@ const Intro = () => {
               overflow: 'hidden',
             }}
           >
-            <img src={MapDemo} alt="로딩중" />
+            <img
+              style={{
+                position: 'relative',
+                left: '60px',
+                scale: '1.2',
+              }}
+              src={MapDemo}
+              alt="지도데모영상"
+            />
           </div>
         </Section2>
         <Section2 backgroundColor="#AAE0E1">
@@ -459,7 +468,7 @@ const Intro = () => {
                 scale: '0.5',
               }}
               src={Demo}
-              alt="로딩중"
+              alt="좋아요데모영상"
             />
           </div>
           <Body2>
@@ -472,6 +481,7 @@ const Intro = () => {
                 color: '#0D61AE',
                 width: 'fit-content',
                 textAlign: 'center',
+                lineHeight: '140%',
               }}
             >
               나중에 다시 볼 수 있도록 좋아하는 사진을
@@ -489,7 +499,7 @@ const Intro = () => {
           </Body2>
         </Section2>
         <Section2 backgroundColor="#FFFFFF">
-          3d interation 추후에 three.js 사용할 수 있으면 넣을 예정
+          <CubeContainer />
         </Section2>
       </Container>
     </>
