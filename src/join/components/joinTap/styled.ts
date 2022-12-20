@@ -20,6 +20,9 @@ export const Form = styled.form`
   + form {
     margin-top: 20px;
   }
+  input + div {
+    margin-top: 3px;
+  }
 `;
 
 export const Button = styled.button`
