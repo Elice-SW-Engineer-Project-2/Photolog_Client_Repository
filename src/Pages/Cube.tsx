@@ -19,13 +19,13 @@ interface INavigateButton {
 const NavigateButton = styledMui(ButtonMui)<INavigateButton>`
   width:fit-content;
   height:fit-content;
-  padding: 12px 47px;
+  padding: 1vh 1.2vw;
   font-family: 'Segoe UI';
   font-style: normal;
   font-weight: 600;
-  font-size:24px;
+  font-size:calc(2.7px + 1.4vmin);
   font-family: 'Segoe UI';
-  line-height: 32px;
+  line-height: 140%;
   color: #FFFFFF;
   background-color: ${(props) => props.backgroundColor};
   :hover{
@@ -105,14 +105,12 @@ const Cube = ({ objectURL, handler, setIndex }: CubeProps) => {
         }}
         onClick={(event) => {
           const index = event.face?.materialIndex;
-          // const popupContainer = document.querySelector('.popup');
-          // const popup = document.createElement('img');
-          // if (index !== undefined) popup.setAttribute('src', objectURL![index]);
-          // popupContainer?.replaceChildren(popup);
           handler(true);
           setIndex(index);
         }}
-        onPointerLeave={() => setIsRotationg((c) => !c)}
+        onPointerLeave={() => {
+          setIsRotationg((c) => !c);
+        }}
         args={[1, 1, 1]}
       >
         <meshBasicMaterial attach="material-0" map={texture0} />
@@ -156,23 +154,57 @@ const CubeContainer: React.FC = () => {
       {isPopupOn && (
         <div
           className="popup"
+          onMouseLeave={() => {
+            setIsPopupOn(false);
+          }}
           style={{
             position: 'absolute',
             left: '70vw',
             width: 'fit-content',
             height: 'fit-content',
-            background: '#87cda1',
+            background: '#ffffff',
             display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
             opacity: '1',
+            borderRadius: '12px',
+            padding: '3vmin',
+            boxShadow: '-2px 3px 6px rgb(0 0 0 / 30%)',
           }}
         >
-          <img
-            style={{ opacity: '1' }}
-            src={objectURL ? objectURL[index] : ''}
-            alt=""
-          />
+          <div
+            style={{
+              width: 'fit-content',
+              height: 'fit-content',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              opacity: '1',
+              marginBottom: '3vmin',
+              gap: '3vmin',
+            }}
+          >
+            <img
+              style={{ borderRadius: '0.8vmin', width: '20vmin' }}
+              src={objectURL ? objectURL[index] : ''}
+              alt=""
+            />
+            <pre
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '2vh',
+                whiteSpace: 'normal',
+              }}
+            >
+              <p style={{ fontSize: 'calc(4px + 2vmin)' }}>게시글 제목</p>
+              <p style={{ fontSize: 'calc(2.7px + 1.4vmin)' }}>
+                게시글 내용...
+              </p>
+              <p style={{ fontSize: 'calc(2.7px + 1.4vmin)' }}>작성자</p>
+            </pre>
+          </div>
           <NavigateButton
             backgroundColor="#07b8b8"
             hoverBackgroundColor="#00a8a7"
