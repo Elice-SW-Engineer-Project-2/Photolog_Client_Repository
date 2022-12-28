@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { ImageList, ImageListItem } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
@@ -20,6 +19,22 @@ const PhotoLists = () => {
   const [token, setToken] = useRecoilState(TOKEN);
   const [isLast, setIsLast] = useState<boolean>(false);
   const [endPostId, setEndPostId] = useState<number | null>(null);
+  const [hashtag, setHashtag] = useState<string>('');
+  const [hashPosts, setHashPosts] = useState<Array<object>>([]);
+
+  // 충우님 header input 코드
+  const enterKey = (e: any) => {
+    if (e.keyCode === 13 || e.code === 'Enter' || e.key === 'Enter') {
+      setHashtag(e.target.value);
+    }
+  };
+  useEffect(() => {
+    const searchInput = document.querySelector('.search_input');
+    searchInput?.addEventListener('keyup', enterKey);
+    return () => {
+      searchInput?.removeEventListener('keyup', enterKey);
+    };
+  }, []);
 
   const getItems = useCallback(async () => {
     setLoading(true);
@@ -71,6 +86,27 @@ const PhotoLists = () => {
     }
   }, [inView, loading]);
 
+  // 해쉬태그 검색
+  useEffect(() => {
+    const fetchHashtagPosts = async () => {
+      const response = await axios.get(
+        `${URL}/hashtags/posts?keyword=${hashtag}`,
+      );
+      return response;
+    };
+    if (hashtag !== '') {
+      try {
+        const response = fetchHashtagPosts();
+        response.then((res) => {
+          const posts = res.data.data;
+          setHashPosts(() => [...posts]);
+        });
+      } catch (err) {
+        console.error('api요청에러: ', err);
+      }
+    }
+  }, [hashtag]);
+
   // 임시 버튼을 위한 핸들러
   // 데이터를 200개 쯤 넣을 것임
   // 위치 데이터는 특정 범위를 줘서 랜덤으로 넣을 것임.
@@ -101,7 +137,7 @@ const PhotoLists = () => {
       if (token === null) {
         throw new Error('토큰 없음');
       }
-      const response = await axios.post(`${URL}/posts`, data, {
+      await axios.post(`${URL}/posts`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -115,29 +151,49 @@ const PhotoLists = () => {
     <P.Container>
       {/* <button onClick={handleTempPostButton}>post 밀어넣기 임시 버튼</button> */}
       <ImageList variant="masonry" cols={6} gap={16}>
-        {items.map((item: any): any => (
-          <React.Fragment key={uuidv4()}>
-            {item.map((picture: any): any => (
-              <ImageListItem key={picture.id}>
+        {hashtag === ''
+          ? items.map((item: any): any => (
+              <React.Fragment key={uuidv4()}>
+                {item.map((picture: any): any => (
+                  <ImageListItem key={picture.id}>
+                    <img
+                      src={`${picture.images[0].imageUrl.url}?w=248&fit=crop&auto=format`}
+                      srcSet={`${picture.images[0].imageUrl.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                      alt={picture.title}
+                      loading="lazy"
+                      style={{
+                        borderRadius: 8,
+                      }}
+                      onClick={() => {
+                        console.log(
+                          `여기서 ${picture.id}번 포스트 상세 페이지로 이동`,
+                        );
+                      }}
+                      role="presentation"
+                    />
+                  </ImageListItem>
+                ))}
+              </React.Fragment>
+            ))
+          : hashPosts.map((post: any): any => (
+              <ImageListItem key={post.id}>
                 <img
-                  src={`${picture.images[0].imageUrl.url}?w=248&fit=crop&auto=format`}
-                  srcSet={`${picture.images[0].imageUrl.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                  alt={picture.title}
+                  src={`${post.images[0].imageUrl.url}?w=248&fit=crop&auto=format`}
+                  srcSet={`${post.images[0].imageUrl.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                  alt={post.title}
                   loading="lazy"
                   style={{
                     borderRadius: 8,
                   }}
                   onClick={() => {
                     console.log(
-                      `여기서 ${picture.id}번 포스트 상세 페이지로 이동`,
+                      `여기서 ${post.id}번 포스트 상세 페이지로 이동`,
                     );
                   }}
                   role="presentation"
                 />
               </ImageListItem>
             ))}
-          </React.Fragment>
-        ))}
       </ImageList>
       <div ref={ref} style={{ height: '100px' }} />
     </P.Container>
