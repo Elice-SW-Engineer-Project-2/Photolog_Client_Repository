@@ -32,7 +32,10 @@ const Intro = () => {
     disableScroll();
     return removeDisableScroll;
   }, []);
+  let isDataLack = false;
   const data = useFetchData(`${URL}/posts?quantity=7`);
+  if (!data) isDataLack = true;
+  if (data?.length < 7) isDataLack = true;
   const objectURL = data?.map((d: any) => d.images[0].imageUrl.url);
   // const objectURL = useGetData('https://picsum.photos/238/349', 7);
   const navigate = useNavigate();
@@ -90,57 +93,61 @@ const Intro = () => {
               </p>
             </S.StyledH1>
           </S.Body>
-          <S.ImageList>
-            {Array(7)
-              .fill('')
-              .map((_, idx) => {
-                let offset;
-                const key = idx;
-                if (Math.abs(idx - 3) % 3 === 0) offset = 0;
-                if (Math.abs(idx - 3) % 3 === 2) offset = 75;
-                if (Math.abs(idx - 3) % 3 === 1) offset = 75 + 65;
-                if (idx === 3) offset = 75 + 65 + 50;
-                return (
-                  <motion.div
-                    key={key}
-                    variants={motionVariants}
-                    style={{
-                      position: 'relative',
-                      top: `${offset}px`,
-                    }}
-                    animate={{
-                      transform: 'translateY(-5px)',
-                      transition: {
-                        from: 'translateY(0px)',
-                        duration: 0.5,
-                        repeat: Infinity,
-                        repeatType: 'reverse',
-                      },
-                    }}
-                    whileHover="hover"
-                    onClick={(e) => {
-                      if (data) {
-                        navigate(`/posts/${data[idx].id}`);
-                      } else {
-                        console.log(e);
-                      }
-                    }}
-                  >
-                    <img
-                      style={{
-                        width: '238px',
-                        height: '349.55px',
-                        borderRadius: '20px',
-                        cursor: 'pointer',
-                      }}
+          {isDataLack ? (
+            ''
+          ) : (
+            <S.ImageList>
+              {Array(7)
+                .fill('')
+                .map((_, idx) => {
+                  let offset;
+                  const key = idx;
+                  if (Math.abs(idx - 3) % 3 === 0) offset = 0;
+                  if (Math.abs(idx - 3) % 3 === 2) offset = 75;
+                  if (Math.abs(idx - 3) % 3 === 1) offset = 75 + 65;
+                  if (idx === 3) offset = 75 + 65 + 50;
+                  return (
+                    <motion.div
                       key={key}
-                      src={objectURL ? objectURL[idx] : ''}
-                      alt=""
-                    />
-                  </motion.div>
-                );
-              })}
-          </S.ImageList>
+                      variants={motionVariants}
+                      style={{
+                        position: 'relative',
+                        top: `${offset}px`,
+                      }}
+                      animate={{
+                        transform: 'translateY(-5px)',
+                        transition: {
+                          from: 'translateY(0px)',
+                          duration: 0.5,
+                          repeat: Infinity,
+                          repeatType: 'reverse',
+                        },
+                      }}
+                      whileHover="hover"
+                      onClick={(e) => {
+                        if (data) {
+                          navigate(`/posts/${data[idx].id}`);
+                        } else {
+                          console.log(e);
+                        }
+                      }}
+                    >
+                      <img
+                        style={{
+                          width: '238px',
+                          height: '349.55px',
+                          borderRadius: '20px',
+                          cursor: 'pointer',
+                        }}
+                        key={key}
+                        src={objectURL ? objectURL[idx] : ''}
+                        alt=""
+                      />
+                    </motion.div>
+                  );
+                })}
+            </S.ImageList>
+          )}
           <div
             style={{
               width: '100%',
@@ -267,9 +274,9 @@ const Intro = () => {
             </S.NavigateButton>
           </S.Body2>
         </S.Section2>
-        <S.Section2 backgroundcolor="#FFFFFF">
+        {/* <S.Section2 backgroundcolor="#FFFFFF">
           <CubeContainer />
-        </S.Section2>
+        </S.Section2> */}
       </S.Container>
       <DialogTest
         openFlag={flag}
