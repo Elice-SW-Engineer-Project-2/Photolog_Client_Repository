@@ -7,7 +7,7 @@ import { useQuery } from 'react-query';
 import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
-import { Header } from '../../../Components/Commons/Header';
+import { Header, HeaderForPost } from '../../../Components/Commons/Header';
 import * as S from './styled';
 import Editor from '../../../Components/Commons/Editor';
 import TagToolTip from '../Utils/Tooltip';
@@ -334,12 +334,12 @@ const PostPhoto = () => {
   return (
     <>
       <S.PostContainer>
-        <Header />
+        <HeaderForPost />
         <S.Container>
           <S.Wrapper>
             <S.TitleWrapper>
               <S.TitleArea ref={titleRef} />
-              <S.BoxBorder />
+              {/* <S.BoxBorder /> */}
               <S.TagBox>
                 {tagList &&
                   tagList.map((tagName: string, index: number) => (
@@ -381,7 +381,7 @@ const PostPhoto = () => {
                   </S.CameraSelectBox>
                 )}
               </S.CameraModelBox>
-              <S.LensModelBox>
+              <S.LensModelBox2>
                 <S.IconBox>
                   <RiCameraLensFill {...iconStyle} />
                 </S.IconBox>
@@ -401,9 +401,9 @@ const PostPhoto = () => {
                     ))}
                   </S.CameraLens>
                 )}
-              </S.LensModelBox>
+              </S.LensModelBox2>
             </S.TitleWrapper>
-            <S.ContentBox>
+            <S.ContentBox2>
               <S.QuillEditor>
                 <Editor
                   setMetaData={setPhotoMetaData}
@@ -415,7 +415,7 @@ const PostPhoto = () => {
                   setCalValue={setCalValue}
                 />
               </S.QuillEditor>
-            </S.ContentBox>
+            </S.ContentBox2>
 
             <SubmitDialog
               openFlag={flagLocation}
@@ -500,7 +500,7 @@ const PostPhoto = () => {
         </S.Container>
       </S.PostContainer>
       <S.PostFooter>
-        <S.SubmitBtn onClick={handleSubmit}>등록</S.SubmitBtn>
+        <S.TextButton onClick={handleSubmit}>등록</S.TextButton>
         <SubmitDialog
           openFlag={flag}
           title="등록"

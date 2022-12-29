@@ -1,3 +1,5 @@
+import { styled as styledMui } from '@mui/material/styles';
+import { Button } from '@mui/material';
 import styled from 'styled-components';
 
 export const PostContainer = styled.div`
@@ -29,8 +31,8 @@ export const TitleBox = styled.div``;
 export const TitleArea = styled.textarea.attrs({
   placeholder: '제목을 입력하세요',
 })`
-  height: 80px;
-  min-height: 72px;
+  height: 64px;
+  min-height: 64px;
   font-size: 48px;
   resize: none;
   line-height: 1.5;
@@ -40,7 +42,23 @@ export const TitleArea = styled.textarea.attrs({
   display: block;
   color: #000;
   width: 100%;
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 46px;
+  display: flex;
+  align-items: flex-end;
+  color: #373737;
+  :hover {
+    background-color: ;
+  }
+  ::placeholder {
+    font-weight: 500;
+    color: #ccc;
+  }
 `;
+
 export const BoxBorder = styled.div`
   background: rgb(73, 80, 87);
   width: 80px;
@@ -53,6 +71,7 @@ export const BoxBorder = styled.div`
 
 export const TagBox = styled.div`
   display: flex;
+  height: 54px;
   flex-wrap: wrap;
   font-size: 18px;
 `;
@@ -67,6 +86,12 @@ export const TagInput = styled.input.attrs({
   line-height: 32px;
   margin-bottom: 20px;
   border: none;
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  ::placeholder {
+    font-weight: 500;
+    color: #ccc;
+  }
 `;
 export const Tag = styled.div<{ bgColor: string }>`
   font-size: 16px;
@@ -74,7 +99,7 @@ export const Tag = styled.div<{ bgColor: string }>`
   align-items: center;
   height: 32px;
   border-radius: 16px;
-  padding: 0 16px 0 16px;
+  padding: 0 16px 2px 16px;
   background: ${({ bgColor }) => bgColor};
   color: white;
   margin-right: 12px;
@@ -82,6 +107,10 @@ export const Tag = styled.div<{ bgColor: string }>`
   transition: 0.125s ease-in 0s;
   cursor: pointer;
   animation: 0.125s ease-in-out 0s;
+  font-family: 'Noto Sans KR', 'Noto Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
 `;
 
 export const CameraWrapper = styled.div``;
@@ -91,8 +120,16 @@ export const CameraModelBox = styled.div`
   /* align-items: flex-start; */
   width: 100%;
 `;
-export const LensModelBox = styled.div`
+export const LensModelBox2 = styled.div`
   margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+  /* align-items: flex-start; */
+  width: 100%;
+`;
+export const LensModelBox = styled.div`
+  margin-top: 10px;
+  margin-bottom: -20px;
   display: flex;
   justify-content: flex-start;
   /* align-items: flex-start; */
@@ -117,6 +154,26 @@ export const CameraCompany = styled.select`
   height: $height + px;
   background: #fff;
   margin: 0 5px 5px 0;
+`;
+export const CameraCompany2 = styled.p`
+  width: 180px;
+  height: 30px;
+  padding: 0 30px 0 10px;
+  line-height: $height + px;
+  height: $height + px;
+  background: #fff;
+  margin: 0 5px 5px -10px;
+  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+
+  /* prinary_300 */
+
+  color: #07b8b8;
 `;
 export const LensCompany = styled.select`
   width: 180px;
@@ -153,8 +210,32 @@ export const CameraLens = styled.select`
   background: #fff;
   margin: 0 5px 5px 0;
 `;
+export const CameraLens2 = styled.p`
+  width: fit-content;
+  height: 30px;
+  padding: 0 30px 0 10px;
+  line-height: $height + px;
+  height: $height + px;
+  background: #fff;
+  margin: 0 5px 5px -10px;
+  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
 
-export const ContentBox = styled.div``;
+  /* prinary_300 */
+
+  color: #07b8b8;
+`;
+export const ContentBox2 = styled.div``;
+export const ContentBox = styled.div`
+  border: 2px solid #ccc;
+  padding: 50px 100px;
+  margin-bottom: 50px;
+`;
 export const QuillEditor = styled.div`
   height: 604px;
 `;
@@ -200,9 +281,9 @@ export const MapSectionBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 704px;
+  width: 563px;
   height: 40px;
-  margin-bottom: 30px;
+  margin-bottom: 16px;
 `;
 
 export const MapTitleLogoBox = styled.div`
@@ -216,11 +297,16 @@ export const MapTitleText = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 24px;
+  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  color: #ff9e44;
 `;
 
 export const KaKaoMapWrapper = styled.div`
-  width: 704px;
-  height: 304px;
+  width: 563px;
+  height: 272px;
   margin-bottom: 30px;
   background-color: peru;
 `;
@@ -234,8 +320,8 @@ export const MapDescription = styled.div``;
 export const DescriptionInput = styled.input.attrs({
   placeholder: '사진 설명',
 })`
-  margin: 20px 0px;
-  width: 704px;
+  margin: 8px 0px;
+  width: 563px;
   height: 30px;
   border: none;
   background-color: transparent;
@@ -247,9 +333,10 @@ export const PostFooter = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 100%;
+  width: 670px;
+  margin: auto;
+  bottom: 140px;
   height: 50px;
-  background-color: #d0d0d0;
   /* z-index: 100; */
 `;
 
@@ -262,4 +349,18 @@ export const SubmitBtn = styled.button`
   font-size: 16px;
   color: white;
   background-color: #07b8b8;
+`;
+export const TextButton = styledMui(Button)`
+  padding: 6px 8px;
+  font-family: 'Noto Sans','Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size:18px;
+  line-height: 27px;
+  background-color:#07b8b8;
+  color: #fff;
+  :hover{
+    font-weight: 600;
+    color:#07b8b8;
+  }
 `;

@@ -40,7 +40,21 @@ export const HeaderContainer = styled.div<IHeaderContainer>`
     transform: translateY(-77px);
   }
 `;
-
+export const HeaderContainer2 = styled.div<IHeaderContainer>`
+  width: 100%;
+  height: 77px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0px;
+  left: -${(props) => props.scrollX}px;
+  z-index: 12;
+  background-color: #ffffff;
+  transition: ${(props) => (props.animationOff ? 'null' : '500ms all')};
+  &.up {
+    transform: translateY(-77px);
+  }
+`;
 export const MuiButton = styledMui(Button)<IButton>`
   width:max-content;
   padding: 8px 10px;
