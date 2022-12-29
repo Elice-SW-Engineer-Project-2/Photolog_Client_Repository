@@ -175,7 +175,7 @@ const PhotoLists = () => {
           {/* <button onClick={handleTempPostButton}>
             post 밀어넣기 임시 버튼
           </button> */}
-          <ImageList variant="masonry" cols={6} gap={16}>
+          <ImageList variant="masonry" cols={6} gap={24}>
             {hashtag === ''
               ? items.map((item: any): any => (
                   <React.Fragment key={uuidv4()}>

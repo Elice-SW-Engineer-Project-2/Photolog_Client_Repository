@@ -11,6 +11,8 @@ export const Container = styled.div``;
 export const Wrapper = styled.div`
   display: flex;
   height: 80vh;
+  width: 95%;
+  margin: auto;
   min-height: 900px;
   flex-direction: column;
   padding: 100px;
