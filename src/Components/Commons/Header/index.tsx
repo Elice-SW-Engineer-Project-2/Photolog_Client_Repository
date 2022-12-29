@@ -136,6 +136,7 @@ const HeaderWithProfile = () => {
   const logoutHandler = () => {
     client.get(`auth/logout`).then((res) => console.log('logout', res));
     setToken(null);
+    // window.location.reload()
   };
   return (
     <>

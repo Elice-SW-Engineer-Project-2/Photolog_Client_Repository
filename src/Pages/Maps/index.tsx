@@ -2,8 +2,9 @@ import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import axios from 'axios';
 import * as S from './styled';
+import { URL } from '../../axiosInstance';
 
-const URL = 'http://34.64.34.184:5001';
+//  const URL = 'http://34.64.34.184:5001';
 
 // 인터페이스
 interface ILatLng {

@@ -5,6 +5,7 @@ import { Box, OrbitControls } from '@react-three/drei';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styled';
 import { useFetchData, useGetData } from '../../hooks/useGetData';
+import { URL } from '../../../../axiosInstance';
 
 interface ICubeProps {
   objectURL?: string[];
@@ -66,9 +67,9 @@ const Scene = ({ objectURL, handler, setIndex }: ICubeProps) => (
 );
 
 const CubeContainer: React.FC = () => {
-  const data0 = useFetchData('http://34.64.34.184:5001/posts/223');
-  const data1 = useFetchData('http://34.64.34.184:5001/posts/218');
-  const data2 = useFetchData('http://34.64.34.184:5001/posts/222');
+  const data0 = useFetchData(`${URL}/posts/223`);
+  const data1 = useFetchData(`${URL}/posts/218`);
+  const data2 = useFetchData(`${URL}/posts/222`);
   let post: any;
   let objectURL;
   if (data1 && data0 && data2) {

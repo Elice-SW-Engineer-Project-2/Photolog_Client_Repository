@@ -13,6 +13,8 @@ export const LikeButton = styled.div`
   z-index: 12;
   bottom: 10px;
   right: 10px;
+  cursor: pointer;
+
   & img {
     position: absolute;
     top: 30%;
