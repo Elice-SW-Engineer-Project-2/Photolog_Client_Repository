@@ -82,8 +82,8 @@ const CustomOverlayContainer = ({
 const Maps = () => {
   const [hashtag, setHashtag] = useState<string>('');
   const [myLocation, setMyLocation] = useState<ILatLng>({
-    lat: 33.450701,
-    lng: 126.570667,
+    lat: 37.54650855807067,
+    lng: 127.06538375409116,
   });
   const [boundaryLocation, setBoundaryLocation] = useState<IBoundaryLocation>({
     sw: {
@@ -133,32 +133,32 @@ const Maps = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // 페이지 로딩 시 내 위치정보를 불러오는 코드
-    try {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            setMyLocation((prev) => ({
-              ...prev,
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            }));
-          },
-          (err) => {
-            throw new Error(err.message);
-          },
-          {
-            enableHighAccuracy: true,
-          },
-        );
-      } else {
-        throw new Error('위치정보 사용 불가능');
-      }
-    } catch (err) {
-      console.error(`에러: ${err}`);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // 페이지 로딩 시 내 위치정보를 불러오는 코드
+  //   try {
+  //     if (navigator.geolocation) {
+  //       navigator.geolocation.getCurrentPosition(
+  //         (position) => {
+  //           setMyLocation((prev) => ({
+  //             ...prev,
+  //             lat: position.coords.latitude,
+  //             lng: position.coords.longitude,
+  //           }));
+  //         },
+  //         (err) => {
+  //           throw new Error(err.message);
+  //         },
+  //         {
+  //           enableHighAccuracy: true,
+  //         },
+  //       );
+  //     } else {
+  //       throw new Error('위치정보 사용 불가능');
+  //     }
+  //   } catch (err) {
+  //     console.error(`에러: ${err}`);
+  //   }
+  // }, []);
 
   return (
     <>
