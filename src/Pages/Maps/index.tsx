@@ -202,7 +202,7 @@ const Maps = () => {
                     key={marker.postId}
                     lat={marker.latitude}
                     lng={marker.longitude}
-                    image={marker.imageURL}
+                    image={`${marker.imageURL}?x=54`}
                     postId={marker.postId}
                   />
                 );
@@ -221,7 +221,7 @@ const Maps = () => {
                     key={marker.postId}
                     lat={marker.latitude}
                     lng={marker.longitude}
-                    image={marker.imageURL}
+                    image={`${marker.imageURL}?x=54`}
                     postId={marker.postId}
                   />
                 );
