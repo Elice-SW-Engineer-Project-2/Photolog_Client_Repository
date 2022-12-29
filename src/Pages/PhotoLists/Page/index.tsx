@@ -4,6 +4,12 @@ import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
+// 데이터 밀어넣기 테스트용
+import { useRecoilState } from 'recoil';
+import { TOKEN } from '../../Join/Atoms';
+import getRandomHashtags from '../utils/getRandomHashtags';
+import getRandomArbitrary from '../utils/getRandomArbitrary';
+//
 import * as P from './styled';
 import { URL } from '../../../axiosInstance';
 import Spinner from '../../Home/Components/Spinner';
@@ -19,6 +25,8 @@ const PhotoLists = () => {
   const [hashtag, setHashtag] = useState<string>('');
   const [hashPosts, setHashPosts] = useState<Array<object>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  // 데이터 밀어넣기 테스트용
+  const [token, setToken] = useRecoilState(TOKEN);
 
   const navigate = useNavigate();
 
@@ -116,6 +124,46 @@ const PhotoLists = () => {
     }
   }, [hashtag]);
 
+  // 임시 버튼을 위한 핸들러
+  // 데이터를 200개 쯤 넣을 것임
+  // 위치 데이터는 특정 범위를 줘서 랜덤으로 넣을 것임.
+  // sw: {
+  //   lat: 37.48970512,
+  //   lng: 126.72134047,
+  // },
+  // ne: {
+  //   lat: 37.49551104,
+  //   lng: 126.73862053,
+  // },
+  // 이 사이 위치를 랜덤으로. (테스트용 위치 by 김상현)
+
+  const handleTempPostButton = async () => {
+    const data = {
+      title: '자동화제목',
+      content: '자동화컨텐츠',
+      imageUrlId: Math.floor(getRandomArbitrary(1, 7)),
+      lensId: 254,
+      cameraId: 292,
+      latitude: getRandomArbitrary(37.46970512, 37.51551104),
+      longitude: getRandomArbitrary(126.70134047, 126.75862053),
+      locationInfo: '자동화위치',
+      takenAt: new Date().toISOString(),
+      hashtags: getRandomHashtags(),
+    };
+    try {
+      if (token === null) {
+        throw new Error('토큰 없음');
+      }
+      await axios.post(`${URL}/posts`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (err) {
+      console.error('api요청에러: ', err);
+    }
+  };
+
   return (
     <>
       {isLoading ? (
@@ -124,6 +172,9 @@ const PhotoLists = () => {
         </>
       ) : (
         <P.Container>
+          {/* <button onClick={handleTempPostButton}>
+            post 밀어넣기 임시 버튼
+          </button> */}
           <ImageList variant="masonry" cols={6} gap={16}>
             {hashtag === ''
               ? items.map((item: any): any => (
