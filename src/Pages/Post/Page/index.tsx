@@ -439,7 +439,7 @@ const PostPhoto = () => {
                     <S.MapTitleText>지도</S.MapTitleText>
                   </S.MapTitleLogoBox>
                 </S.MapSectionBar>
-                <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
                   <S.CalendarWrapper>
                     <Calendar value={calValue} onChange={setCalValue} />
                   </S.CalendarWrapper>

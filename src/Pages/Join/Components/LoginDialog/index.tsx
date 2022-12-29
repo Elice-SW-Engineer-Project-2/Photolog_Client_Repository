@@ -29,6 +29,14 @@ import {
 } from '../../Utils';
 import { ReactComponent as Favicon } from './favicon.svg';
 
+const enterKey = (e: any) => {
+  if (e.keyCode === 13 || e.code === 'Enter' || e.key === 'Enter') {
+    const loginButton: HTMLButtonElement | null =
+      document.querySelector('.login-button');
+    loginButton?.click();
+  }
+};
+
 const Transition = forwardRef(
   (
     props: TransitionProps & {
@@ -56,7 +64,6 @@ const LoginTitle = (): JSX.Element => (
 const LoginContent = (): JSX.Element => {
   const navigate = useNavigate();
   const url = useParams();
-
   const [token, setToken] = useRecoilState(TOKEN);
   const [emailstate, setEmailState] = useState<string>(state.NORMAL);
   const [pwstate, setPwState] = useState<string>(state.NORMAL);
@@ -144,6 +151,7 @@ const LoginContent = (): JSX.Element => {
           className="title"
           state={warningEmail(emailstate)}
           onChange={changeEmailHandler}
+          onKeyUp={enterKey}
           // value={email}
         />
         <HelperText helper={warningEmail(emailstate)} content={email} />
@@ -163,11 +171,14 @@ const LoginContent = (): JSX.Element => {
           className="title"
           state={warningPw(pwstate)}
           onChange={changePwHandler}
+          onKeyUp={enterKey}
           // value={pw}
         />
         <HelperText helper={warningPw(pwstate)} content={pw} />
       </FormControl>
-      <S.Button onClick={clickLoginHandler}>로그인</S.Button>
+      <S.Button className="login-button" onClick={clickLoginHandler}>
+        로그인
+      </S.Button>
       <div>{errorMessage}</div>
       <div style={{ marginTop: '60px', display: 'flex', gap: '50px' }}>
         <S.StyledP
