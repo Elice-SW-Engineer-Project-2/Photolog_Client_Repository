@@ -26,7 +26,7 @@ const PhotoLists = () => {
   const [hashPosts, setHashPosts] = useState<Array<object>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // 데이터 밀어넣기 테스트용
-  const [token, setToken] = useRecoilState(TOKEN);
+  const [token] = useRecoilState(TOKEN)[0];
 
   const navigate = useNavigate();
 

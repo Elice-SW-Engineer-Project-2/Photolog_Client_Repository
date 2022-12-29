@@ -89,7 +89,17 @@ const PostPhoto = () => {
   const [sendData, setSendData] = useState<any>();
 
   const fetchPost = async (data: any) => {
-    await accessClient(token).post(`/posts`, data);
+    await accessClient(token)
+      .post(`/posts`, data)
+      .then(async () =>
+        accessClient(token)
+          .get(`/users/mypage/posts`)
+          .then((res) => {
+            const lastAry = res.data.data[res.data.data.length - 1];
+            setSendCompleteFlag(false);
+            navigate(`/post/${lastAry.postId}`);
+          }),
+      );
   };
 
   const agreeFn = () => {
@@ -149,8 +159,6 @@ const PostPhoto = () => {
 
   const handleComplete = () => {
     fetchPost(sendData);
-    setSendCompleteFlag(false);
-    navigate('/menu/photolists');
     return sendCompleteFlag;
   };
 
