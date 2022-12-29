@@ -99,7 +99,7 @@ export const Email = styled.p`
   margin-bottom: 24px;
 `;
 
-export const ChangeMode = styled.p`
+export const ChangeMode = styled.div`
   padding: 10px 20px;
   font-family: 'Noto Sans', 'Noto Sans KR';
   font-style: normal;

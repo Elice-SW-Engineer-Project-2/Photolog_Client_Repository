@@ -7,7 +7,7 @@ import { useFetchData } from '../hooks/useGetData';
 import { disableScroll, removeDisableScroll } from '../Utils';
 import { ReactComponent as Logo } from '../assets/logo.svg';
 import MapDemo from '../assets/mapdemo.gif';
-import Demo from '../assets/demo.gif';
+import Demo from '../assets/ddemo.gif';
 import { DialogTest } from '../../Join/Components/LoginDialog/index';
 import { TOKEN } from '../../Join/Atoms';
 import { URL } from '../../../axiosInstance';
@@ -232,9 +232,9 @@ const Intro = () => {
             <img
               style={{
                 position: 'relative',
-                left: '-446px',
-                top: '-296px',
-                scale: '0.5',
+                left: '-176px',
+                top: '-117px',
+                scale: '0.67',
               }}
               src={Demo}
               alt="좋아요데모영상"
