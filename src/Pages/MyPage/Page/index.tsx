@@ -74,13 +74,13 @@ const MyPage = () => {
               setMode('MYLIKE');
             }}
           >
-            {mode === 'MYLIKE' ? (
+            {/* {mode === 'MYLIKE' ? (
               <p style={{ fontWeight: '500', color: '#ff9e44' }}>
                 좋아요 한 사진
               </p>
             ) : (
               '좋아요 한 사진'
-            )}
+            )} */}
           </S.ChangeMode>
         </S.Profile>
       </S.ProfileContainer>

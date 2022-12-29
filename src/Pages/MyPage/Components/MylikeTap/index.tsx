@@ -73,11 +73,14 @@ const MylikeTap = () => {
     }
   }, [inView, loading]);
 
+  console.log('items', items);
   return (
     <S.Container>
       <P.Container>
         <ImageList variant="masonry" cols={5} gap={16}>
-          {items[0].postId !== null &&
+          {items &&
+            items[0] &&
+            items[0].postId !== null &&
             items.map((item: any): any => (
               <ImageListItem key={item.postId}>
                 <img
@@ -96,7 +99,7 @@ const MylikeTap = () => {
                     navigate(`post/${e.target.id}`);
                   }}
                 />
-                <S.LikeButton>
+                {/* <S.LikeButton>
                   <img
                     src={likeIcon}
                     id={item.postId}
@@ -105,11 +108,11 @@ const MylikeTap = () => {
                     role="presentation"
                     onClick={(e: any) => likeclickHandler(e, token)}
                   />
-                </S.LikeButton>
+                </S.LikeButton> */}
               </ImageListItem>
             ))}
         </ImageList>
-        {items[0].postId === null && <Nothing />}
+        {items && items[0] && items[0].postId === null && <Nothing />}
       </P.Container>
     </S.Container>
   );

@@ -97,7 +97,7 @@ const MypostTap = () => {
                     navigate(`/post/${e.target.id}`);
                   }}
                 />
-                <S.LikeButton>
+                {/* <S.LikeButton>
                   <img
                     className={item.isLikeByme === 'true' ? 'like' : ''}
                     id={item.postId}
@@ -106,7 +106,7 @@ const MypostTap = () => {
                     role="presentation"
                     onClick={(e: any) => likeclickHandler(e, token)}
                   />
-                </S.LikeButton>
+                </S.LikeButton> */}
               </ImageListItem>
             ))}
         </ImageList>
