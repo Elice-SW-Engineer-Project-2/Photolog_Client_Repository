@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import * as S from './styled';
 import { useGetData, useFetchData } from '../hooks/useGetData';
 import { disableScroll, removeDisableScroll } from '../Utils';
@@ -9,8 +10,10 @@ import MapDemo from '../assets/map.gif';
 import Demo from '../assets/demo.gif';
 import CubeContainer from '../Components/Cube';
 import { DialogTest } from '../../Join/Components/LoginDialog/index';
+import { TOKEN } from '../../Join/Atoms';
 
 const Intro = () => {
+  const [token, setToken] = useRecoilState(TOKEN);
   const [flag, setFlag] = useState(false);
   const disAgreeFn = () => {
     console.log('취소');
@@ -55,23 +58,27 @@ const Intro = () => {
                 navigate('/menu/maps');
               }}
             />
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <S.PrimaryButton
-                fontSize="20px"
-                onClick={() => {
-                  setFlag(true);
-                }}
-              >
-                로그인
-              </S.PrimaryButton>
-              <S.TextButton
-                onClick={() => {
-                  navigate('/join');
-                }}
-              >
-                가입하기
-              </S.TextButton>
-            </div>
+            {token ? (
+              ''
+            ) : (
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <S.PrimaryButton
+                  fontSize="20px"
+                  onClick={() => {
+                    setFlag(true);
+                  }}
+                >
+                  로그인
+                </S.PrimaryButton>
+                <S.TextButton
+                  onClick={() => {
+                    navigate('/join');
+                  }}
+                >
+                  가입하기
+                </S.TextButton>
+              </div>
+            )}
           </S.Header>
           <S.Body>
             <S.StyledH1 style={{ textAlign: 'center' }}>
