@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Box, OrbitControls } from '@react-three/drei';
+import { useNavigate } from 'react-router-dom';
 import * as S from './styled';
-import { useGetData } from '../../hooks/useGetData';
+import { useFetchData, useGetData } from '../../hooks/useGetData';
 
 interface ICubeProps {
   objectURL?: string[];
@@ -21,13 +22,15 @@ const Cube = ({ objectURL, handler, setIndex }: ICubeProps) => {
     }
   });
   let timeout: NodeJS.Timeout;
+  THREE.ImageUtils.crossOrigin = 'Anonymous';
   const loader = new THREE.TextureLoader();
-  const texture0 = loader.load(objectURL![0]);
-  const texture1 = loader.load(objectURL![1]);
-  const texture2 = loader.load(objectURL![2]);
-  const texture3 = loader.load(objectURL![3]);
-  const texture4 = loader.load(objectURL![4]);
-  const texture5 = loader.load(objectURL![5]);
+  loader.crossOrigin = 'Anonymous';
+  const texture0 = loader.load(`${objectURL![0]}?not-from-cache-please`);
+  const texture1 = loader.load(`${objectURL![1]}?not-from-cache-please`);
+  const texture2 = loader.load(`${objectURL![2]}?not-from-cache-please`);
+  const texture3 = loader.load(`${objectURL![3]}?not-from-cache-please`);
+  const texture4 = loader.load(`${objectURL![4]}?not-from-cache-please`);
+  const texture5 = loader.load(`${objectURL![5]}?not-from-cache-please`);
   return (
     <mesh ref={cube as any}>
       <Box
@@ -63,9 +66,18 @@ const Scene = ({ objectURL, handler, setIndex }: ICubeProps) => (
 );
 
 const CubeContainer: React.FC = () => {
-  const objectURL = useGetData('https://picsum.photos/200/200', 6);
+  const data0 = useFetchData('http://34.64.34.184:5001/posts/223');
+  const data1 = useFetchData('http://34.64.34.184:5001/posts/218');
+  const data2 = useFetchData('http://34.64.34.184:5001/posts/222');
+  let post: any;
+  let objectURL;
+  if (data1 && data0 && data2) {
+    post = [data0, data1, data2, data0, data1, data2];
+    objectURL = post?.map((d: any) => d.images[0].imageUrl.url);
+  }
   const [isPopupOn, setIsPopupOn] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
+  const navigate = useNavigate();
   return (
     <>
       <Canvas
@@ -137,11 +149,10 @@ const CubeContainer: React.FC = () => {
                   textOverflow: 'ellipsis',
                 }}
               >
-                게시글 제목이 들어갈 자리
+                {post ? post[index].title : '제목이 없습니다.'}
               </p>
               <S.StyledP lineClamp="3">
-                게시글 내용이 들어갈 자리 게시글 내용이 들어갈 자리 게시글
-                내용이 들어갈 자리 게시글 내용이 들어갈 자리
+                {post ? post[index].content : '내용이 없습니다.'}
               </S.StyledP>
               <p
                 style={{
@@ -151,12 +162,17 @@ const CubeContainer: React.FC = () => {
                   textOverflow: 'ellipsis',
                 }}
               >
-                작성자
+                {post ? post[index].user.profiles.nickname : ''}
               </p>
             </div>
             <S.NavigateButton
-              backgroundColor="#07b8b8"
-              hoverBackgroundColor="#00a8a7"
+              backgroundcolor="#07b8b8"
+              hoverbackgroundcolor="#00a8a7"
+              onClick={() => {
+                if (index === 0 || index === 3) navigate(`/post/231`);
+                if (index === 1 || index === 4) navigate(`/post/231`);
+                if (index === 2 || index === 5) navigate(`/post/231`);
+              }}
             >
               게시글 보러가기
             </S.NavigateButton>
