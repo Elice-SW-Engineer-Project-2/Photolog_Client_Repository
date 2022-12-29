@@ -14,6 +14,7 @@ export const LikeButton = styled.div`
   z-index: 12;
   bottom: 10px;
   right: 10px;
+
   & img {
     position: absolute;
     top: 30%;
@@ -28,5 +29,8 @@ export const LikeButton = styled.div`
   & img.like {
     filter: invert(17%) sepia(92%) saturate(2871%) hue-rotate(325deg)
       brightness(88%) contrast(96%);
+  }
+  img:hover {
+    transform: scale(120%, 120%);
   }
 `;

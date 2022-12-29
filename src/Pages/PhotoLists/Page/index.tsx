@@ -9,8 +9,9 @@ import * as P from './styled';
 import getRandomArbitrary from '../utils/getRandomArbitrary';
 import getRandomHashtags from '../utils/getRandomHashtags';
 import { TOKEN } from '../../Join/Atoms';
+import { URL } from '../../../axiosInstance';
 
-const URL = 'http://34.64.34.184:5001';
+// const URL = 'http://34.64.34.184:5001';
 
 const PhotoLists = () => {
   const [ref, inView] = useInView();

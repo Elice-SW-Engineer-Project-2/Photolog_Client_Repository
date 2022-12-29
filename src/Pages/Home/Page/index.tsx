@@ -11,6 +11,7 @@ import Demo from '../assets/demo.gif';
 import CubeContainer from '../Components/Cube';
 import { DialogTest } from '../../Join/Components/LoginDialog/index';
 import { TOKEN } from '../../Join/Atoms';
+import { URL } from '../../../axiosInstance';
 
 const Intro = () => {
   const [token, setToken] = useRecoilState(TOKEN);
@@ -31,7 +32,7 @@ const Intro = () => {
     disableScroll();
     return removeDisableScroll;
   }, []);
-  const data = useFetchData('http://34.64.34.184:5001/posts?quantity=7');
+  const data = useFetchData(`${URL}/posts?quantity=7`);
   const objectURL = data?.map((d: any) => d.images[0].imageUrl.url);
   // const objectURL = useGetData('https://picsum.photos/238/349', 7);
   const navigate = useNavigate();
