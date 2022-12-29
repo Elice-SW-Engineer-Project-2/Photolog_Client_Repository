@@ -63,14 +63,24 @@ const MyPage = () => {
               setMode('MYPOST');
             }}
           >
-            나의 사진
+            {mode === 'MYPOST' ? (
+              <p style={{ fontWeight: '500', color: '#ff9e44' }}>나의 사진</p>
+            ) : (
+              '나의 사진'
+            )}
           </S.ChangeMode>
           <S.ChangeMode
             onClick={() => {
               setMode('MYLIKE');
             }}
           >
-            좋아요 한 사진
+            {mode === 'MYLIKE' ? (
+              <p style={{ fontWeight: '500', color: '#ff9e44' }}>
+                좋아요 한 사진
+              </p>
+            ) : (
+              '좋아요 한 사진'
+            )}
           </S.ChangeMode>
         </S.Profile>
       </S.ProfileContainer>

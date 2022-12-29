@@ -10,17 +10,18 @@ const Nothing = () => (
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
+      gap: '24px',
     }}
   >
     <NothingSVG />
-    <p>사진이 없습니다</p>
-    <p
+    <S.Notice1 style={{ marginTop: '16px' }}>사진이 없습니다</S.Notice1>
+    <S.Notice2
       style={{
         whiteSpace: 'nowrap',
       }}
     >
       사진을 올려 다른 사람들과 공유해보세요
-    </p>
+    </S.Notice2>
   </div>
 );
 

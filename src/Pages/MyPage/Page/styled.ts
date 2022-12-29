@@ -61,7 +61,6 @@ export const ProfileContainer = styled.div`
   align-items: center;
   flex-direction: row-reverse;
   padding: 0 50px;
-  border: 3px solid black;
 `;
 
 export const Profile = styled.div`
@@ -69,6 +68,10 @@ export const Profile = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 50px 0 50px 0;
+  border: 2px solid #ccc;
+  border-radius: 16px;
+  margin-right: 20px;
 `;
 
 export const NickName = styled.p`
