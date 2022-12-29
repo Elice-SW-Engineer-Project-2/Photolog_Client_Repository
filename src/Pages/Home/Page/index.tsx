@@ -124,7 +124,7 @@ const Intro = () => {
                       whileHover="hover"
                       onClick={(e) => {
                         if (data) {
-                          navigate(`/posts/${data[idx].id}`);
+                          navigate(`/post/${data[idx].id}`);
                         }
                       }}
                     >
