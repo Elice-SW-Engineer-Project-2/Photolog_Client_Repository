@@ -12,6 +12,14 @@ import {
 import { MODE } from '../../Atoms';
 import HelperText from '../HelperText';
 
+const enterKey = (e: any) => {
+  if (e.keyCode === 13 || e.code === 'Enter' || e.key === 'Enter') {
+    const loginButton: HTMLButtonElement | null =
+      document.querySelector('.find-button');
+    loginButton?.click();
+  }
+};
+
 const FindPwTap = () => {
   const [mode, setMode] = useRecoilState(MODE);
   const [findpwstate, setFindPwState] = useState<string>(state.NORMAL);
@@ -89,6 +97,7 @@ const FindPwTap = () => {
             className="title"
             state={warningEmail(emailstate)}
             onChange={changeEmailHandler}
+            onKeyUp={enterKey}
           />
           <HelperText helper={warningEmail(emailstate)} content={email} />
         </FormControl>
@@ -101,7 +110,9 @@ const FindPwTap = () => {
         </S.InfoBottom>
       </div>
 
-      <S.Button onClick={clickFindPwHandler}>임시 비밀번호 전송</S.Button>
+      <S.Button className="find-button" onClick={clickFindPwHandler}>
+        임시 비밀번호 전송
+      </S.Button>
       <IsfindpwDialog
         flag={flag}
         tapstate={findpwstate}

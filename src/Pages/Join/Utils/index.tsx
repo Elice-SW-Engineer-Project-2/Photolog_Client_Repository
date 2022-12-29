@@ -116,7 +116,7 @@ export const JoinDialog = (props: IDialogProps) => {
     sizeW: string | undefined;
     sizeH: string | undefined;
   }>({
-    sizeW: '700px',
+    sizeW: '500px',
     sizeH: '300px',
   });
 
@@ -142,7 +142,9 @@ export const JoinDialog = (props: IDialogProps) => {
         aria-describedby="alert-dialog-slide-description"
         PaperProps={dialogStyle}
       >
-        <DialogTitle>{title}</DialogTitle>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <DialogTitle>{title}</DialogTitle>
+        </div>
         <DialogContent>
           <div
             id="alert-dialog-slide-description"
@@ -152,7 +154,12 @@ export const JoinDialog = (props: IDialogProps) => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleClose(agreeFn())}>확인</Button>
+          <Button
+            style={{ color: '#07b8b8' }}
+            onClick={() => handleClose(agreeFn())}
+          >
+            확인
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

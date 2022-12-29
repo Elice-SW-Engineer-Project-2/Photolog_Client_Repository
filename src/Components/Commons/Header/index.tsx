@@ -18,6 +18,7 @@ const HeaderNonLogin = () => {
   const { pathname: curLocation } = useLocation();
   const [flag, setFlag] = useState(false);
   const disAgreeFn = () => {
+    console.log('취소');
     setFlag(false);
     return flag;
   };
@@ -35,8 +36,9 @@ const HeaderNonLogin = () => {
       <S.HeaderContainer scrollX={window.scrollX} animationOff>
         <S.Logo>
           <Logo
+            style={{ cursor: 'pointer' }}
             onClick={() => {
-              navigate('/menu/photolists');
+              navigate('/');
             }}
           />
         </S.Logo>
@@ -125,19 +127,17 @@ const HeaderWithProfile = () => {
   const { pathname: curLocation } = useLocation();
 
   useEffect(() => {
-    if (token) {
-      getUser(token).then((res) => {
-        setImage(res.image_url || defaultProfile);
-        setNickname(res.profile_nickname);
-        setEmail(res.user_email);
-      });
-    }
-  }, [token]);
+    getUser(token).then((res) => {
+      setImage(res.image_url || defaultProfile);
+      setNickname(res.profile_nickname);
+      setEmail(res.user_email);
+    });
+  }, []);
 
   const logoutHandler = () => {
-    client.get(`auth/logout`);
+    client.get(`auth/logout`).then((res) => console.log('logout', res));
     setToken(null);
-    window.location.reload();
+    // window.location.reload()
   };
   return (
     <>
@@ -145,7 +145,7 @@ const HeaderWithProfile = () => {
         <Logo
           style={{ cursor: 'pointer', marginLeft: '7.7vw' }}
           onClick={() => {
-            navigate('/menu/photolists');
+            navigate('/');
           }}
         />
         <S.MenuItems>
@@ -277,18 +277,18 @@ export const HeaderForPost = () => {
     };
   }, []);
   return (
-    <S.HeaderContainer2 className="header">
+    <S.HeaderContainer className="header">
       <Logo
         style={{ cursor: 'pointer', margin: 'auto' }}
         onClick={() => {
-          navigate('/');
+          navigate('/menu/maps');
         }}
       />
-    </S.HeaderContainer2>
+    </S.HeaderContainer>
   );
 };
 
 export const Header = () => {
-  const token = useRecoilState(TOKEN)[0];
+  const [token, setToken] = useRecoilState(TOKEN);
   return token ? <HeaderWithProfile /> : <HeaderNonLogin />;
 };

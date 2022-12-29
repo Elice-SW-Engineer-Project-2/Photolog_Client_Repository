@@ -303,9 +303,12 @@ const PhotoPost = () => {
           </S.PostContainer>
           {getMyProfile!.user_id === data.data.data.user.id && (
             <S.PostFooter>
-              <S.SubmitBtn onClick={() => setDeleteFlag(true)}>
+              <S.TextButton
+                style={{ marginTop: '100px' }}
+                onClick={() => setDeleteFlag(true)}
+              >
                 삭제
-              </S.SubmitBtn>
+              </S.TextButton>
               <Dialog
                 openFlag={deleteFlag}
                 title="삭제"

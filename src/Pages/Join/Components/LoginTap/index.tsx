@@ -15,6 +15,14 @@ import {
 } from '../../Utils';
 import HelperText from '../HelperText';
 
+const enterKey = (e: any) => {
+  if (e.keyCode === 13 || e.code === 'Enter' || e.key === 'Enter') {
+    const loginButton: HTMLButtonElement | null =
+      document.querySelector('.login-button');
+    loginButton?.click();
+  }
+};
+
 const LoginTap = () => {
   const navigate = useNavigate();
   const [token, setToken] = useRecoilState(TOKEN);
@@ -63,11 +71,10 @@ const LoginTap = () => {
       });
       setLoginState(state.SUCCESS);
       setToken(result.data.data);
-
       setFlag(true);
     } catch (err: any) {
       setLoginState(state.ERROR);
-      setErrorMessage(err.response.data.message);
+      setErrorMessage('로그인에 실패했습니다, 정보를 확인해주세요.');
       setFlag(true);
     }
   };
@@ -108,6 +115,7 @@ const LoginTap = () => {
             className="title"
             state={warningEmail(emailstate)}
             onChange={changeEmailHandler}
+            onKeyUp={enterKey}
           />
           <HelperText helper={warningEmail(emailstate)} content={email} />
         </FormControl>
@@ -126,10 +134,13 @@ const LoginTap = () => {
             className="title"
             state={warningPw(pwstate)}
             onChange={changePwHandler}
+            onKeyUp={enterKey}
           />
         </FormControl>
       </div>
-      <S.Button onClick={clickLoginHandler}>로그인</S.Button>
+      <S.Button className="login-button" onClick={clickLoginHandler}>
+        로그인
+      </S.Button>
       {flag ? (
         <IsLoginDialog
           flag={flag}

@@ -17,6 +17,14 @@ import {
 import { MODE, TOKEN } from '../../Atoms';
 import HelperText from '../HelperText';
 
+const enterKey = (e: any) => {
+  if (e.keyCode === 13 || e.code === 'Enter' || e.key === 'Enter') {
+    const loginButton: HTMLButtonElement | null =
+      document.querySelector('.join-button');
+    loginButton?.click();
+  }
+};
+
 const JoinTap = () => {
   const [token, setToken] = useRecoilState(TOKEN);
   const navigate = useNavigate();
@@ -103,7 +111,7 @@ const JoinTap = () => {
   const agreeFn = async () => {
     setFlag(false);
     if (joinstate === state.SUCCESS) navigate('/menu/maps');
-    navigate('/menu/maps');
+
     return flag;
   };
 
@@ -138,6 +146,7 @@ const JoinTap = () => {
             className="title"
             state={warningNickname(nicknamestate)}
             onChange={changeNickNameHandler}
+            onKeyUp={enterKey}
           />
           <HelperText
             helper={warningNickname(nicknamestate)}
@@ -158,6 +167,7 @@ const JoinTap = () => {
             className="title"
             state={warningEmail(emailstate)}
             onChange={changeEmailHandler}
+            onKeyUp={enterKey}
           />
           <HelperText helper={warningEmail(emailstate)} content={email} />
         </FormControl>
@@ -176,12 +186,15 @@ const JoinTap = () => {
             className="title"
             state={warningPw(pwstate)}
             onChange={changePwHandler}
+            onKeyUp={enterKey}
           />
           <HelperText helper={warningPw(pwstate)} content={pw} />
         </FormControl>
       </div>
 
-      <S.Button onClick={clickJoinHandler}>회원가입</S.Button>
+      <S.Button className="join-button" onClick={clickJoinHandler}>
+        회원가입
+      </S.Button>
       {flag ? (
         <IsJoinDialog
           flag={flag}

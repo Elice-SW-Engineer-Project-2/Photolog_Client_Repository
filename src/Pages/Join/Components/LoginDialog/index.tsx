@@ -26,8 +26,17 @@ import {
   warningEmail,
   warningPw,
   state,
+  IsLoginDialog,
 } from '../../Utils';
 import { ReactComponent as Favicon } from './favicon.svg';
+
+const enterKey = (e: any) => {
+  if (e.keyCode === 13 || e.code === 'Enter' || e.key === 'Enter') {
+    const loginButton: HTMLButtonElement | null =
+      document.querySelector('.login-button');
+    loginButton?.click();
+  }
+};
 
 const Transition = forwardRef(
   (
@@ -56,7 +65,6 @@ const LoginTitle = (): JSX.Element => (
 const LoginContent = (): JSX.Element => {
   const navigate = useNavigate();
   const url = useParams();
-
   const [token, setToken] = useRecoilState(TOKEN);
   const [emailstate, setEmailState] = useState<string>(state.NORMAL);
   const [pwstate, setPwState] = useState<string>(state.NORMAL);
@@ -94,9 +102,19 @@ const LoginContent = (): JSX.Element => {
     }
     if (pwInput === '') setPwState(state.NORMAL);
   };
+  const agreeFn = () => {
+    if (loginState === state.SUCCESS) {
+      navigate(
+        window.location.pathname === `/`
+          ? '/menu/maps'
+          : window.location.pathname,
+      ); //   인트로만 /menu/maps로 갑니다
+    } else setFlag(false);
+    return flag;
+  };
   //  로그인 button
   const clickLoginHandler = async () => {
-    if (!(emailstate === state.SUCCESS && emailstate === state.SUCCESS)) {
+    if (!(emailstate === state.SUCCESS && pwstate === state.SUCCESS)) {
       return;
     }
     try {
@@ -106,18 +124,10 @@ const LoginContent = (): JSX.Element => {
       });
       setLoginState(state.SUCCESS);
       setToken(result.data.data);
-      setFlag(false);
-
-      navigate(
-        window.location.pathname === `/`
-          ? '/menu/maps'
-          : window.location.pathname,
-      ); //   인트로만 /menu/maps로 갑니다
+      setFlag(true);
     } catch (err: any) {
       setLoginState(state.ERROR);
-      setErrorMessage(err.response.data.message);
-      // setEmail('');
-      // setpw('');
+      setErrorMessage('로그인에 실패했습니다, 정보를 확인해주세요.');
       setFlag(true);
     }
   };
@@ -144,6 +154,7 @@ const LoginContent = (): JSX.Element => {
           className="title"
           state={warningEmail(emailstate)}
           onChange={changeEmailHandler}
+          onKeyUp={enterKey}
           // value={email}
         />
         <HelperText helper={warningEmail(emailstate)} content={email} />
@@ -163,12 +174,15 @@ const LoginContent = (): JSX.Element => {
           className="title"
           state={warningPw(pwstate)}
           onChange={changePwHandler}
+          onKeyUp={enterKey}
           // value={pw}
         />
         <HelperText helper={warningPw(pwstate)} content={pw} />
       </FormControl>
-      <S.Button onClick={clickLoginHandler}>로그인</S.Button>
-      <div>{errorMessage}</div>
+      <S.Button className="login-button" onClick={clickLoginHandler}>
+        로그인
+      </S.Button>
+      {/* <div>{errorMessage}</div> */}
       <div style={{ marginTop: '60px', display: 'flex', gap: '50px' }}>
         <S.StyledP
           onClick={() => {
@@ -185,6 +199,14 @@ const LoginContent = (): JSX.Element => {
           비밀번호 찾기
         </S.StyledP>
       </div>
+      {flag ? (
+        <IsLoginDialog
+          flag={flag}
+          tapstate={loginState}
+          errorMessage={errorMessage}
+          agreeFn={agreeFn}
+        />
+      ) : null}
     </div>
   );
 };
@@ -196,8 +218,8 @@ export const DialogTest = (props: IDialogProps) => {
     sizeW: string | undefined;
     sizeH: string | undefined;
   }>({
-    sizeW: '500px',
-    sizeH: '600px',
+    sizeW: '480px',
+    sizeH: '560px',
   });
 
   useEffect(() => {
@@ -217,8 +239,8 @@ export const DialogTest = (props: IDialogProps) => {
   };
   const dialogStyle = {
     sx: {
-      width: dialogSize.sizeW,
-      height: dialogSize.sizeH,
+      width: '530px',
+      height: '770px',
       borderRadius: '25px',
       padding: '40px',
     },

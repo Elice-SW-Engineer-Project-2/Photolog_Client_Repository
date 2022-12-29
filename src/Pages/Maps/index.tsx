@@ -162,10 +162,12 @@ const Maps = () => {
 
   return (
     <>
-      {hashtag && (
-        <S.HashTagStyle>
+      {hashtag ? (
+        <S.HashTagStyle style={{ marginBottom: '-30px' }}>
           <HashTag hashtag={hashtag} setHashtag={setHashtag} />
         </S.HashTagStyle>
+      ) : (
+        <div style={{ height: '23.5px' }} />
       )}
       <Map // 지도를 표시할 Container
         center={{
@@ -178,6 +180,7 @@ const Maps = () => {
           width: '100%',
           height: '640px',
           borderRadius: '10px',
+          marginTop: '30px',
         }}
         level={3} // 지도의 확대 레벨
         onTileLoaded={(map) =>
