@@ -6,7 +6,7 @@ import * as S from './styled';
 import { useFetchData } from '../hooks/useGetData';
 import { disableScroll, removeDisableScroll } from '../Utils';
 import { ReactComponent as Logo } from '../assets/logo.svg';
-import MapDemo from '../assets/map.gif';
+import MapDemo from '../assets/mapdemo.gif';
 import Demo from '../assets/demo.gif';
 import { DialogTest } from '../../Join/Components/LoginDialog/index';
 import { TOKEN } from '../../Join/Atoms';
@@ -202,17 +202,18 @@ const Intro = () => {
           </S.Body2>
           <div
             style={{
-              width: '713.59px',
+              width: '693.59px',
               height: '486.56px',
-              background: '#F5F5F5',
+              background: '#fff',
               overflow: 'hidden',
             }}
           >
             <img
               style={{
                 position: 'relative',
-                left: '60px',
-                scale: '1.2',
+                left: '-165px',
+                top: '-110px',
+                scale: '0.66',
               }}
               src={MapDemo}
               alt="지도데모영상"
