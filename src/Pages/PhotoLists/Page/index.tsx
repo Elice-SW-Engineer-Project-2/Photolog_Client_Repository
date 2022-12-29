@@ -81,7 +81,7 @@ const PhotoLists = () => {
   }, [getItems]);
 
   useEffect(() => {
-    if (inView && !loading) {
+    if (inView && !loading && hashtag === '') {
       setPage((prevState) => prevState + 1);
     }
   }, [inView, loading]);
