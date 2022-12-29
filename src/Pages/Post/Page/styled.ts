@@ -309,6 +309,7 @@ export const KaKaoMapWrapper = styled.div`
   height: 272px;
   margin-bottom: 30px;
   background-color: peru;
+  overflow: hidden;
 `;
 
 export const CalendarWrapper = styled.div`
@@ -318,7 +319,7 @@ export const CurLoaction = styled.div``;
 
 export const MapDescription = styled.div``;
 export const DescriptionInput = styled.input.attrs({
-  placeholder: '사진 설명',
+  placeholder: '사진 위치를 기록해주세요',
 })`
   margin: 8px 0px;
   width: 563px;

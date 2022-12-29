@@ -247,7 +247,7 @@ const PhotoPost = () => {
                       <S.IconBox>
                         <FaMapMarkerAlt {...iconStyle2} />
                       </S.IconBox>
-                      <S.MapTitleText>지도 및 촬영날짜</S.MapTitleText>
+                      <S.MapTitleText>지도</S.MapTitleText>
                     </S.MapTitleLogoBox>
                   </S.MapSectionBar>
                   <div

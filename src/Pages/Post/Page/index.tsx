@@ -324,7 +324,10 @@ const PostPhoto = () => {
     color: '#07b8b8',
     size: 24,
   };
-
+  const iconStyle2 = {
+    color: '#FF9E44',
+    size: 24,
+  };
   return (
     <>
       <S.PostContainer>
@@ -431,37 +434,39 @@ const PostPhoto = () => {
                 <S.MapSectionBar>
                   <S.MapTitleLogoBox>
                     <S.IconBox>
-                      <FaMapMarkerAlt {...iconStyle} />
+                      <FaMapMarkerAlt {...iconStyle2} />
                     </S.IconBox>
                     <S.MapTitleText>지도</S.MapTitleText>
                   </S.MapTitleLogoBox>
                 </S.MapSectionBar>
-                <S.CalendarWrapper>
-                  <Calendar value={calValue} onChange={setCalValue} />
-                </S.CalendarWrapper>
-                <S.KaKaoMapWrapper>
-                  <S.CurLoaction>
-                    <Map
-                      center={{
-                        lat: photoMetaData!.latitude,
-                        lng: photoMetaData!.longitude,
-                      }}
-                      style={{
-                        width: '704px',
-                        height: '304px',
-                      }}
-                      level={3}
-                    >
-                      <MapMarker
-                        position={{
+                <div style={{ display: 'flex' }}>
+                  <S.CalendarWrapper>
+                    <Calendar value={calValue} onChange={setCalValue} />
+                  </S.CalendarWrapper>
+                  <S.KaKaoMapWrapper>
+                    <S.CurLoaction>
+                      <Map
+                        center={{
                           lat: photoMetaData!.latitude,
                           lng: photoMetaData!.longitude,
                         }}
-                      />
-                    </Map>
-                    <S.DescriptionInput ref={mapDesRef} />
-                  </S.CurLoaction>
-                </S.KaKaoMapWrapper>
+                        style={{
+                          width: '563px',
+                          height: '272px',
+                        }}
+                        level={3}
+                      >
+                        <MapMarker
+                          position={{
+                            lat: photoMetaData!.latitude,
+                            lng: photoMetaData!.longitude,
+                          }}
+                        />
+                      </Map>
+                      <S.DescriptionInput ref={mapDesRef} />
+                    </S.CurLoaction>
+                  </S.KaKaoMapWrapper>
+                </div>
               </S.MapWrapper>
             )}
             {mapSelFlag && (
@@ -469,32 +474,36 @@ const PostPhoto = () => {
                 <S.MapSectionBar>
                   <S.MapTitleLogoBox>
                     <S.IconBox>
-                      <FaMapMarkerAlt {...iconStyle} />
+                      <FaMapMarkerAlt {...iconStyle2} />
                     </S.IconBox>
                     <S.MapTitleText>지도</S.MapTitleText>
                   </S.MapTitleLogoBox>
                 </S.MapSectionBar>
-                <S.CalendarWrapper>
-                  <Calendar value={calValue} onChange={setCalValue} />
-                </S.CalendarWrapper>
-                <S.KaKaoMapWrapper>
-                  <S.CurLoaction>
-                    <SelectMap
-                      userLatitude={userLatitude}
-                      userLongitude={userLongitude}
-                      setUserLatitude={setUserLatitude}
-                      setUserLongitude={setUserLongitude}
-                    />
-                    <S.DescriptionInput ref={mapDesRef} />
-                  </S.CurLoaction>
-                </S.KaKaoMapWrapper>
+                <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+                  <S.CalendarWrapper>
+                    <Calendar value={calValue} onChange={setCalValue} />
+                  </S.CalendarWrapper>
+                  <S.KaKaoMapWrapper>
+                    <S.CurLoaction>
+                      <SelectMap
+                        userLatitude={userLatitude}
+                        userLongitude={userLongitude}
+                        setUserLatitude={setUserLatitude}
+                        setUserLongitude={setUserLongitude}
+                      />
+                      <S.DescriptionInput ref={mapDesRef} />
+                    </S.CurLoaction>
+                  </S.KaKaoMapWrapper>
+                </div>
               </S.MapWrapper>
             )}
           </S.Wrapper>
         </S.Container>
       </S.PostContainer>
       <S.PostFooter>
-        <S.TextButton onClick={handleSubmit}>등록</S.TextButton>
+        <S.TextButton style={{ marginTop: '100px' }} onClick={handleSubmit}>
+          등록
+        </S.TextButton>
         <SubmitDialog
           openFlag={flag}
           title="등록"
