@@ -9,11 +9,11 @@ import { RiCameraLensFill } from 'react-icons/ri';
 import { useRecoilState } from 'recoil';
 import { TOKEN } from '../../Join/Atoms';
 import Spinner from '../../Home/Components/Spinner';
-import { Header } from '../../../Components/Commons/Header';
+import { HeaderForPost } from '../../../Components/Commons/Header';
 import * as S from '../../Post/Page/styled';
 import DeleteDialog from '../../../Components/Commons/Dialog';
 import { getUser } from '../../Edit/Utils';
-import defaultProfile from '../../assets/defaultProfile.svg';
+import defaultProfile from '../../Edit/assets/defaultProfile.svg';
 
 const PhotoPost = () => {
   const { postId } = useParams();
@@ -23,6 +23,10 @@ const PhotoPost = () => {
   const tagColor: string[] = ['#7978C6', '#7EC885', '#E6549D'];
   const iconStyle = {
     color: '#07b8b8',
+    size: 24,
+  };
+  const iconStyle2 = {
+    color: '#FF9E44',
     size: 24,
   };
   const [deleteFlag, setDeleteFlag] = useState(false);
@@ -63,12 +67,12 @@ const PhotoPost = () => {
       ) : (
         <>
           <S.PostContainer>
-            <Header />
+            <HeaderForPost />
             <S.Container>
               <S.Wrapper>
                 <S.TitleWrapper>
                   <S.TitleArea value={data.data.data.title} readOnly />
-                  <S.BoxBorder />
+                  {/* <S.BoxBorder /> */}
                   <S.TagBox>
                     {data.data.data.hashtags.map((tagAttr: any) => (
                       <S.Tag
@@ -83,15 +87,18 @@ const PhotoPost = () => {
                     <S.IconBox>
                       <FaCameraRetro {...iconStyle} />
                     </S.IconBox>
-                    <S.CameraCompany
-                      ref={cameraRef}
-                      value={data.data.data.images[0].cameraId}
-                      disabled
-                    >
-                      <option value={data.data.data.images[0].cameraId}>
-                        {data.data.data.images[0].camera.model}
-                      </option>
-                    </S.CameraCompany>
+                    {/* <S.CameraCompany
+                    ref={cameraRef}
+                    value={data.data.data.images[0].cameraId}
+                    disabled
+                  >
+                    <option value={data.data.data.images[0].cameraId}>
+                      {data.data.data.images[0].camera.model}
+                    </option>
+                  </S.CameraCompany> */}
+                    <S.CameraCompany2>
+                      {data.data.data.images[0].camera.model}
+                    </S.CameraCompany2>
                   </S.CameraModelBox>
                   <S.LensModelBox>
                     <S.IconBox>
@@ -103,18 +110,18 @@ const PhotoPost = () => {
                       </S.LensCompany>
                     )}
                     {data.data.data.images[0].lensId !== null && (
-                      <S.CameraLens
-                        ref={lensRef}
-                        value={data.data.data.images[0].lensId}
-                        disabled
-                      >
-                        <option
-                          value={data.data.data.images[0].lensId}
-                          disabled
-                        >
-                          {data.data.data.images[0].lens.model}
-                        </option>
-                      </S.CameraLens>
+                      // <S.CameraLens
+                      //   ref={lensRef}
+                      //   value={data.data.data.images[0].lensId}
+                      //   disabled
+                      // >
+                      //   <option value={data.data.data.images[0].lensId} disabled>
+                      //     {data.data.data.images[0].lens.model}
+                      //   </option>
+                      // </S.CameraLens>
+                      <S.CameraLens2>
+                        {data.data.data.images[0].lens.model}
+                      </S.CameraLens2>
                     )}
                   </S.LensModelBox>
                 </S.TitleWrapper>
@@ -132,44 +139,50 @@ const PhotoPost = () => {
                   <S.MapSectionBar>
                     <S.MapTitleLogoBox>
                       <S.IconBox>
-                        <FaMapMarkerAlt {...iconStyle} />
+                        <FaMapMarkerAlt {...iconStyle2} />
                       </S.IconBox>
-                      <S.MapTitleText>지도</S.MapTitleText>
+                      <S.MapTitleText>지도 및 촬영날짜</S.MapTitleText>
                     </S.MapTitleLogoBox>
                   </S.MapSectionBar>
-                  <S.CalendarWrapper>
-                    <Calendar
-                      value={
-                        new Date(data.data.data.images[0].takenAt.split('T')[0])
-                      }
-                    />
-                  </S.CalendarWrapper>
-                  <S.KaKaoMapWrapper>
-                    <S.CurLoaction>
-                      <Map
-                        center={{
-                          lat: data.data.data.images[0].latitude,
-                          lng: data.data.data.images[0].longitude,
-                        }}
-                        style={{
-                          width: '704px',
-                          height: '304px',
-                        }}
-                        level={3}
-                      >
-                        <MapMarker
-                          position={{
+                  <div
+                    style={{ display: 'flex', flexDirection: 'row-reverse' }}
+                  >
+                    <S.CalendarWrapper>
+                      <Calendar
+                        value={
+                          new Date(
+                            data.data.data.images[0].takenAt.split('T')[0],
+                          )
+                        }
+                      />
+                    </S.CalendarWrapper>
+                    <S.KaKaoMapWrapper>
+                      <S.CurLoaction>
+                        <Map
+                          center={{
                             lat: data.data.data.images[0].latitude,
                             lng: data.data.data.images[0].longitude,
                           }}
+                          style={{
+                            width: '563px',
+                            height: '272px',
+                          }}
+                          level={3}
+                        >
+                          <MapMarker
+                            position={{
+                              lat: data.data.data.images[0].latitude,
+                              lng: data.data.data.images[0].longitude,
+                            }}
+                          />
+                        </Map>
+                        <S.DescriptionInput
+                          value={data.data.data.images[0].locationInfo}
+                          disabled
                         />
-                      </Map>
-                      <S.DescriptionInput
-                        value={data.data.data.images[0].locationInfo}
-                        disabled
-                      />
-                    </S.CurLoaction>
-                  </S.KaKaoMapWrapper>
+                      </S.CurLoaction>
+                    </S.KaKaoMapWrapper>
+                  </div>
                 </S.MapWrapper>
               </S.Wrapper>
             </S.Container>

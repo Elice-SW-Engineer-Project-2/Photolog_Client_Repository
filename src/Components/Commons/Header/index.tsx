@@ -275,14 +275,14 @@ export const HeaderForPost = () => {
     };
   }, []);
   return (
-    <S.HeaderContainer className="header">
+    <S.HeaderContainer2 className="header">
       <Logo
         style={{ cursor: 'pointer', margin: 'auto' }}
         onClick={() => {
           navigate('/menu/photolists');
         }}
       />
-    </S.HeaderContainer>
+    </S.HeaderContainer2>
   );
 };
 
