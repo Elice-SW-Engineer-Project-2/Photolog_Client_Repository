@@ -280,7 +280,7 @@ export const HeaderForPost = () => {
       <Logo
         style={{ cursor: 'pointer', margin: 'auto' }}
         onClick={() => {
-          navigate('/menu/photolists');
+          navigate('/');
         }}
       />
     </S.HeaderContainer2>
