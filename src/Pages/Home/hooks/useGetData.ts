@@ -40,13 +40,17 @@ const fetcher = async (url: string, num: number) => {
   return res;
 };
 const fetcher2 = async (url: string) => {
-  const res = await axios.get(url, {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-    },
-  });
-  return res.data.data;
+  try {
+    const res = await axios.get(url, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+      },
+    });
+    return res.data.data;
+  } catch {
+    return [];
+  }
 };
 export const useGetData = (url: string, num: number) => {
   const [resource, setResource] = useState<any>(null);
