@@ -8,8 +8,6 @@ import * as P from './styled';
 import Spinner from '../../Home/Components/Spinner';
 import TopButton from '../Components/TopButton';
 
-const URL = 'http://34.64.34.184:5001';
-
 const PhotoLists = () => {
   const [ref, inView] = useInView();
   const [items, setItems] = useState<Array<object>>([]);
@@ -56,11 +54,13 @@ const PhotoLists = () => {
         const quantity = 30;
         if (endPostId === null) {
           // 첫 로딩 시 데이터 가져오기
-          response = await axios.get(`${URL}/posts?quantity=${quantity}`);
+          response = await axios.get(
+            `${process.env.REACT_APP_API_BASE_URL}/posts?quantity=${quantity}`,
+          );
         } else if (endPostId !== null) {
           // 스크롤 시 데이터 추가로 가져오기
           response = await axios.get(
-            `${URL}/posts?quantity=${quantity}&endPostId=${endPostId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/posts?quantity=${quantity}&endPostId=${endPostId}`,
           );
         }
         const dataLength = response?.data.data.length;
@@ -100,7 +100,7 @@ const PhotoLists = () => {
   useEffect(() => {
     const fetchHashtagPosts = async () => {
       const response = await axios.get(
-        `${URL}/hashtags/posts?keyword=${hashtag}`,
+        `${process.env.REACT_APP_API_BASE_URL}/hashtags/posts?keyword=${hashtag}`,
       );
       return response;
     };

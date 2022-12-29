@@ -4,8 +4,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styled';
 
-const URL = 'http://34.64.34.184:5001';
-
 // 인터페이스
 interface ILatLng {
   lat: number;
@@ -101,7 +99,10 @@ const Maps = () => {
       latlng: boundaryLocation,
     };
     const fetchBoundaryPosts = async () => {
-      const response = await axios.post(`${URL}/posts/map`, data);
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/posts/map`,
+        data,
+      );
       return response;
     };
     try {
