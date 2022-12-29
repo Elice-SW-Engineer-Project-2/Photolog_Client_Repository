@@ -36,17 +36,13 @@ const Default2 = ({ setMode }: IDefaultProps) => {
   const changeHandler = async (e: any) => {
     if (e.target.files[0]) {
       const getS3UploadImg = await getprofilePresignedURL(e.target.files[0]);
-      console.log('getprofilePresignedURL', getS3UploadImg);
       const resultId = await client
         .post(`photos`, {
           url: getS3UploadImg,
         })
         .then((res) => res.data.data.id);
 
-      accessClient(token)
-        .put(`profiles/image/${resultId}`)
-        .then((res) => console.log('result', res))
-        .catch((err) => console.log('err', err));
+      accessClient(token).put(`profiles/image/${resultId}`);
       setImage(getS3UploadImg);
     } else {
       setImage(defaultProfile);

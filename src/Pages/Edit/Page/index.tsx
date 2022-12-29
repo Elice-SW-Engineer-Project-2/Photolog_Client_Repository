@@ -16,14 +16,12 @@ const Edit = () => {
   const [flag, setFlag] = useState(false);
 
   const agreeFn = () => {
-    console.log('확인');
     deleteUserHandler(token, setToken);
     setFlag(false);
     setMode('DEFAULT');
     return flag;
   };
   const disagreeFn = () => {
-    console.log('취소');
     setFlag(false);
     setMode('DEFAULT');
     return flag;

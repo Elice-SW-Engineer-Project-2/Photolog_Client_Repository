@@ -4,7 +4,6 @@ const keys = { 37: 1, 38: 1, 39: 1, 40: 1 };
 
 const handleTouchEvent = (e: Event) => {
   e.preventDefault();
-  console.log(e);
 };
 let isAnimating = false;
 const handleWheelEvent = (e: any) => {
@@ -54,7 +53,7 @@ try {
     }),
   );
 } catch (e) {
-  console.log(e);
+  console.error(e);
 }
 
 const wheelOpt = supportsPassive ? { passive: false } : false;

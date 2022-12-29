@@ -24,6 +24,7 @@ const GlobalStyles = createGlobalStyle`
     box-sizing:border-box;
   }
 
+
   #root {
     height: 100%;
   }
@@ -38,7 +39,6 @@ root.render(
     <ThemeProvider theme={basicTheme}>
       <GlobalStyles />
       <App />
-      <ReactQueryDevtools />
     </ThemeProvider>
   </QueryClientProvider>,
 );

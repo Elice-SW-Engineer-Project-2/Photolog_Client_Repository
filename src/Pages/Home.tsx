@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import DialogTest from '../Components/Commons/Dialog';
+import Dialog from '../Components/Commons/Dialog';
 
 const Wrapper = styled.div`
   height: 600px;
@@ -19,13 +19,11 @@ const Home = () => {
   const [flag, setFlag] = useState(false);
 
   const agreeFn = () => {
-    console.log('확인');
     setFlag(false);
     return flag;
   };
 
   const disAgreeFn = () => {
-    console.log('취소');
     setFlag(false);
     return flag;
   };
@@ -33,7 +31,7 @@ const Home = () => {
   return (
     <Wrapper>
       <TestBtn onClick={() => setFlag(true)}>HomeBtn</TestBtn>
-      <DialogTest
+      <Dialog
         openFlag={flag}
         title="Dialog Home"
         content="Home Screen"

@@ -37,12 +37,11 @@ export const state: IState = {
 
 export const getUser = async (token: string) => {
   const result = await accessClient(token).get(`profiles/user`);
-  console.log(`UTIL`, result.data.data[0]);
+
   return result.data.data[0];
 };
 // page 탈퇴하기
 export const deleteUserHandler = async (token: string, setToken: any) => {
-  console.log('탈퇴');
   const result = await accessClient(token).delete(`users`);
   setToken(null);
 };
@@ -66,7 +65,6 @@ interface IDialogProps {
 }
 export const EditDialog = (props: IDialogProps) => {
   const { title, content, agreeFn, openFlag, cancelbtn, disagreeFn } = props;
-  console.log('cancelbtn', cancelbtn);
   const cancel = cancelbtn || false;
   const setOpen = useState<boolean>(false)[1];
   const [dialogSize, setDialogSize] = useState<{

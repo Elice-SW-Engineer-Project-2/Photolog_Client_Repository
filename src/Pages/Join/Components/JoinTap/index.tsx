@@ -39,7 +39,6 @@ const JoinTap = () => {
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const nickNameInput = e.target.value;
-    console.log(nickNameInput);
     if (nickNameInput.length < 2 || nickNameInput.length > 8) {
       setNicknameState(state.STRERROR);
     } else {
@@ -51,7 +50,6 @@ const JoinTap = () => {
 
   const changeEmailHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailInput = e.target.value;
-    console.log(emailInput);
     if (!validateEmail(emailInput)) {
       setEmailState(state.STRERROR);
     } else {
@@ -62,7 +60,6 @@ const JoinTap = () => {
   };
   const changePwHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwInput = e.target.value;
-    console.log(pwInput);
     if (!validatePw(pwInput)) {
       setPwState(state.STRERROR);
     } else {
@@ -89,7 +86,6 @@ const JoinTap = () => {
         email,
         password: pw,
       });
-      console.log(result);
       const loginresult = await client.post(`/auth/login`, {
         email,
         password: pw,
@@ -105,7 +101,6 @@ const JoinTap = () => {
   };
 
   const agreeFn = async () => {
-    console.log('확인');
     setFlag(false);
     if (joinstate === state.SUCCESS) navigate('/menu/maps');
     navigate('/menu/maps');

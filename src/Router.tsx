@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import Test from './Pages/Test';
 import Menu from './Pages/Menu/Page';
 import Spinner from './Pages/Home/Components/Spinner';
 import Intro from './Pages/Home/Page';
@@ -15,7 +14,7 @@ import PhotoPost from './Pages/PhotoPost/Page';
 import { TOKEN } from './Pages/Join/Atoms';
 
 const Router = () => {
-  const [token, setToken] = useRecoilState(TOKEN);
+  const token = useRecoilState(TOKEN)[0];
 
   return (
     <BrowserRouter>
@@ -38,7 +37,6 @@ const Router = () => {
         <Route path="/join" element={<Join />} />
         <Route path="/edit" element={token ? <Edit /> : <LoginDialog />} />
         <Route path="/mypage" element={token ? <MyPage /> : <LoginDialog />} />
-        <Route path="/test" element={<Test />} />
         <Route path="/logindialog" element={<LoginDialog />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>

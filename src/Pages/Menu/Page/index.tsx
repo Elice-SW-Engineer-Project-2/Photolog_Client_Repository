@@ -9,22 +9,18 @@ interface IMenuTtype {
   menuType: string;
 }
 
-const Menu = ({ menuType }: IMenuTtype) => {
-  console.log(menuType);
-
-  return (
-    <>
-      <Header />
-      <S.Container>
-        <S.Wrapper>
-          <S.ContentsFrame>
-            {menuType === 'photo' ? <PhotoLists /> : <Maps />}
-          </S.ContentsFrame>
-        </S.Wrapper>
-      </S.Container>
-      {menuType === 'photo' ? '' : <Footer />}
-    </>
-  );
-};
+const Menu = ({ menuType }: IMenuTtype) => (
+  <>
+    <Header />
+    <S.Container>
+      <S.Wrapper>
+        <S.ContentsFrame>
+          {menuType === 'photo' ? <PhotoLists /> : <Maps />}
+        </S.ContentsFrame>
+      </S.Wrapper>
+    </S.Container>
+    {menuType === 'photo' ? '' : <Footer />}
+  </>
+);
 
 export default Menu;

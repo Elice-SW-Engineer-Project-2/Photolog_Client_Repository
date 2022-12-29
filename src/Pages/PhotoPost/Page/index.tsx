@@ -49,7 +49,6 @@ const PhotoPost = () => {
   const [getMyProfile, setGetMyProfile] = useState<any>('');
   const [defaultImg, setDefaultImg] = useState<any>('');
   const [delBtnId, setDelBtnId] = useState<any>(null);
-  const [updateTxArea, setUpDateTxArea] = useState<any>('');
 
   useEffect(() => {
     setDefaultImg(defaultProfile);
@@ -280,128 +279,6 @@ const PhotoPost = () => {
                     </S.CurLoaction>
                   </S.KaKaoMapWrapper>
                 </S.MapWrapper>
-                <SC.CommentWrapper>
-                  {token !== null && (
-                    <SC.CommentZone>
-                      <SC.UserProfileBox>
-                        <SC.UserProfileImg
-                          src={
-                            getMyProfile.image_url === null ||
-                            getMyProfile.image_url === undefined
-                              ? defaultImg
-                              : getMyProfile.image_url
-                          }
-                          alt="profile_image"
-                        />
-                        <SC.UserNickName>
-                          {getMyProfile.profile_nickname}
-                        </SC.UserNickName>
-                      </SC.UserProfileBox>
-                      <SC.UserComment>
-                        <SC.CommentTextArea ref={commentRef} />
-                        <SC.CommentCreateBtn onClick={handleCreateComment}>
-                          작성
-                        </SC.CommentCreateBtn>
-                        <Dialog
-                          openFlag={createFlag}
-                          title="알림"
-                          content="댓글 내용이 없습니다"
-                          agreeFn={agreeFnCreate}
-                          disAgreeFn={disAgreeFnCreate}
-                          agreeOnly
-                          sizeW="300px"
-                          sizeH="180px"
-                        />
-                      </SC.UserComment>
-                    </SC.CommentZone>
-                  )}
-                  <SC.CommentLists token={token}>
-                    {data.data.data.comments.map((v: any, i: number) => (
-                      <SC.CommentItem key={v.content + i.toString()}>
-                        <SC.UserProfileBox>
-                          <SC.UserProfileImg
-                            src={
-                              (v.user.profiles.image &&
-                                v.user.profiles.image.url) ||
-                              defaultImg
-                            }
-                            alt="profile_image"
-                          />
-
-                          <SC.UserNickName>
-                            {v.user.profiles.nickname}
-                          </SC.UserNickName>
-                        </SC.UserProfileBox>
-                        <SC.UserComment>
-                          <SC.CommentTextArea
-                            id={`${v.id.toString()}tx`}
-                            ref={commentListRef}
-                            disabled={
-                              !(
-                                getMyProfile &&
-                                v.user &&
-                                getMyProfile.user_id === v.user.id
-                              )
-                            }
-                            defaultValue={v.content}
-                          />
-                          {getMyProfile &&
-                            v.user &&
-                            getMyProfile.user_id === v.user.id && (
-                              <>
-                                <SC.CommentUpdateBtn
-                                  id={v.id}
-                                  onClick={() =>
-                                    handleUpdateComment(
-                                      `${v.id.toString()}tx`,
-                                      v.id,
-                                    )
-                                  }
-                                >
-                                  수정
-                                </SC.CommentUpdateBtn>
-                                <Dialog
-                                  openFlag={updateFlag}
-                                  title="알림"
-                                  content="댓글 내용이 없습니다"
-                                  agreeFn={agreeFnUpdate}
-                                  disAgreeFn={disAgreeFnUpdate}
-                                  agreeOnly
-                                  sizeW="300px"
-                                  sizeH="180px"
-                                />
-                                <SC.CommentDeleteBtn
-                                  id={v.id}
-                                  onClick={handleDeleteComment}
-                                >
-                                  삭제
-                                </SC.CommentDeleteBtn>
-                                <Dialog
-                                  openFlag={delCommentFlag}
-                                  title="알림"
-                                  content="댓글을 삭제하시겠습니까 ?"
-                                  agreeFn={agreeFnDelete}
-                                  disAgreeFn={disAgreeFnDelete}
-                                  sizeW="300px"
-                                  sizeH="180px"
-                                />
-                              </>
-                            )}
-                          <Dialog
-                            openFlag={createFlag}
-                            title="알림"
-                            content="댓글 내용이 없습니다"
-                            agreeFn={agreeFnCreate}
-                            disAgreeFn={disAgreeFnCreate}
-                            agreeOnly
-                            sizeW="300px"
-                            sizeH="180px"
-                          />
-                        </SC.UserComment>
-                      </SC.CommentItem>
-                    ))}
-                  </SC.CommentLists>
-                </SC.CommentWrapper>
               </S.Wrapper>
             </S.Container>
           </S.PostContainer>

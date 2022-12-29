@@ -34,7 +34,6 @@ const FindPwTap = () => {
   };
   const clickFindPwHandler = async () => {
     if (!(emailstate === state.SUCCESS)) {
-      console.log('다시');
       return;
     }
     try {
@@ -51,7 +50,6 @@ const FindPwTap = () => {
     }
   };
   const agreeFn = () => {
-    console.log('확인');
     setFlag(false);
     if (findpwstate === state.SUCCESS) setMode('login');
 

@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-
 import FormControl from '@mui/material/FormControl';
 import HelperText from '../HelperText';
 import { MuiButton } from '../../../../Components/Commons/Header/styled';
 import * as S from './styled';
-import DialogTest from '../../../../Components/Commons/Dialog';
 import { TOKEN } from '../../../Join/Atoms';
 
 import { validatePw, warningPw, state } from '../../../Join/Utils';
@@ -40,7 +38,6 @@ const EditPw = ({ setMode }: IEditPwProps) => {
   //  새 비번 확인 input onChange
   const changePwConfirmHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwconfirmInput = e.target.value;
-    console.log(warningPw(pwconfirmstate));
     setPwConfirm(pwconfirmInput);
     if (pwconfirmInput !== pw) {
       setPwConfirmState(state.NONCONFIRMERROR);
@@ -56,8 +53,6 @@ const EditPw = ({ setMode }: IEditPwProps) => {
       const result = await accessClient(token).patch(`users/password`, {
         password: pw,
       });
-
-      console.log(result);
       setEditPwState(state.SUCCESS);
       setFlag(true);
     } else {
@@ -67,7 +62,6 @@ const EditPw = ({ setMode }: IEditPwProps) => {
   };
 
   const agreeFn = () => {
-    console.log('확인');
     setFlag(false);
     setMode('DEFAULT');
     return flag;

@@ -59,10 +59,7 @@ export const CommentCreateBtn = styled.button`
 export const CommentLists = styled.ul<{ token: string }>`
   width: 704px;
   display: flex;
-  margin-top: ${(props) => {
-    console.log('stlyed token: ', props.token);
-    return props.token === null ? `-150px` : `0px`;
-  }};
+  margin-top: ${(props) => (props.token === null ? `-150px` : `0px`)};
   flex-direction: column;
   background-color: peru;
 `;

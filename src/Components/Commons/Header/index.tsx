@@ -18,7 +18,6 @@ const HeaderNonLogin = () => {
   const { pathname: curLocation } = useLocation();
   const [flag, setFlag] = useState(false);
   const disAgreeFn = () => {
-    console.log('취소');
     setFlag(false);
     return flag;
   };
@@ -126,17 +125,19 @@ const HeaderWithProfile = () => {
   const { pathname: curLocation } = useLocation();
 
   useEffect(() => {
-    getUser(token).then((res) => {
-      setImage(res.image_url || defaultProfile);
-      setNickname(res.profile_nickname);
-      setEmail(res.user_email);
-    });
-  }, []);
+    if (token) {
+      getUser(token).then((res) => {
+        setImage(res.image_url || defaultProfile);
+        setNickname(res.profile_nickname);
+        setEmail(res.user_email);
+      });
+    }
+  }, [token]);
 
   const logoutHandler = () => {
-    client.get(`auth/logout`).then((res) => console.log('logout', res));
+    client.get(`auth/logout`);
     setToken(null);
-    // window.location.reload()
+    window.location.reload();
   };
   return (
     <>
@@ -288,6 +289,6 @@ export const HeaderForPost = () => {
 };
 
 export const Header = () => {
-  const [token, setToken] = useRecoilState(TOKEN);
+  const token = useRecoilState(TOKEN)[0];
   return token ? <HeaderWithProfile /> : <HeaderNonLogin />;
 };

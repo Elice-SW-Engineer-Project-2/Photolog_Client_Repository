@@ -1,5 +1,4 @@
 export const validationFunc = (dataList: any) => {
-  console.log(dataList);
   const replaceName = (prevData: any) => {
     switch (prevData) {
       case 'title':

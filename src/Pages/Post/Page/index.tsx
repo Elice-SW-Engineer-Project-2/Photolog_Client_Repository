@@ -228,7 +228,6 @@ const PostPhoto = () => {
   }, [cameraComId]);
 
   useEffect(() => {
-    console.log(photoMetaData);
     if (
       photoMetaData?.latitude !== undefined &&
       photoMetaData?.longitude !== undefined &&
@@ -239,7 +238,6 @@ const PostPhoto = () => {
       setMapFlag(true);
       setMapSelFlag(false);
     } else if (flagLocation) {
-      console.log('location data 없음.');
       setMapFlag(false);
     }
   }, [photoMetaData, flagLocation]);
@@ -247,13 +245,9 @@ const PostPhoto = () => {
   const handleSubmit = async () => {
     // if (quillRef.current) {
     //   // const range = quill.getSelection()?.index;
-    //   // console.log(description);
-    //   // console.log(htmlContent);
     //   // quill.clipboard.dangerouslyPasteHTML(1, `<img src=${url} alt="image" />`);
     //   const description = quillRef.current.getEditor().getText();
     //   const quill = quillRef.current.getEditor();
-    //   console.log('description: ', description);
-    //   console.log('content: ', htmlContent);
     // }
     // const quill = quillRef.current.getEditor();
     // quill.clipboard.dangerouslyPasteHTML(

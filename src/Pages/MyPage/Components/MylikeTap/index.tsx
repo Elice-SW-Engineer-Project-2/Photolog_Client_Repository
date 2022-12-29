@@ -78,39 +78,36 @@ const MylikeTap = () => {
       <P.Container>
         <ImageList variant="masonry" cols={5} gap={16}>
           {items[0].postId !== null &&
-            items.map((item: any): any => {
-              console.log('item.id', item.postId);
-              return (
-                <ImageListItem key={item.postId}>
+            items.map((item: any): any => (
+              <ImageListItem key={item.postId}>
+                <img
+                  id={item.postId}
+                  src={`${item.url}?w=248&fit=crop&auto=format`}
+                  srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                  alt={item.title}
+                  loading="lazy"
+                  style={{
+                    borderRadius: 8,
+                    position: `relative`,
+                    cursor: `pointer`,
+                  }}
+                  role="presentation"
+                  onClick={(e: any) => {
+                    navigate(`post/${e.target.id}`);
+                  }}
+                />
+                <S.LikeButton>
                   <img
+                    src={likeIcon}
                     id={item.postId}
-                    src={`${item.url}?w=248&fit=crop&auto=format`}
-                    srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                    alt={item.title}
-                    loading="lazy"
-                    style={{
-                      borderRadius: 8,
-                      position: `relative`,
-                      cursor: `pointer`,
-                    }}
+                    alt="likeicon"
+                    className="like"
                     role="presentation"
-                    onClick={(e: any) => {
-                      navigate(`post/${e.target.id}`);
-                    }}
+                    onClick={(e: any) => likeclickHandler(e, token)}
                   />
-                  <S.LikeButton>
-                    <img
-                      src={likeIcon}
-                      id={item.postId}
-                      alt="likeicon"
-                      className="like"
-                      role="presentation"
-                      onClick={(e: any) => likeclickHandler(e, token)}
-                    />
-                  </S.LikeButton>
-                </ImageListItem>
-              );
-            })}
+                </S.LikeButton>
+              </ImageListItem>
+            ))}
         </ImageList>
         {items[0].postId === null && <Nothing />}
       </P.Container>

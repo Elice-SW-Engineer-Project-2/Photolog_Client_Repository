@@ -188,6 +188,7 @@ const PhotoLists = () => {
                           loading="lazy"
                           style={{
                             borderRadius: 8,
+                            cursor: 'pointer',
                           }}
                           onClick={() => {
                             navigate(`/post/${picture.id}`);
@@ -207,6 +208,7 @@ const PhotoLists = () => {
                       loading="lazy"
                       style={{
                         borderRadius: 8,
+                        cursor: 'pointer',
                       }}
                       onClick={() => {
                         navigate(`/post/${post.id}`);

@@ -1,12 +1,10 @@
 // 채현 코드
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-
 import FormControl from '@mui/material/FormControl';
 import HelperText from '../HelperText';
 import { MuiButton } from '../../../../Components/Commons/Header/styled';
 import * as S from './styled';
-import DialogTest from '../../../../Components/Commons/Dialog';
 import { TOKEN } from '../../../Join/Atoms';
 
 import { validatePw, warningPw, state } from '../../../Join/Utils';
@@ -33,7 +31,7 @@ const EditPw = () => {
   const changePwHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwInput = e.target.value;
     setPw(pwInput);
-    console.log(pwInput, pw);
+
     if (!validatePw(pwInput)) {
       setPwState(state.STRERROR);
     } else {
@@ -44,9 +42,6 @@ const EditPw = () => {
   //  새 비번 확인 input onChange
   const changePwConfirmHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwconfirmInput = e.target.value;
-    console.log(pwconfirmInput, pwconfirm);
-
-    console.log(warningPw(pwconfirmstate));
     setPwConfirm(pwconfirmInput);
     if (pwconfirmInput !== pw) {
       setPwConfirmState(state.NONCONFIRMERROR);
@@ -63,7 +58,6 @@ const EditPw = () => {
         password: pw,
       });
 
-      console.log(result);
       setEditPwState(state.SUCCESS);
       setFlag(true);
     } else {
@@ -73,7 +67,6 @@ const EditPw = () => {
   };
 
   const agreeFn = () => {
-    console.log('확인');
     setFlag(false);
     setMode('DEFAULT');
     return flag;

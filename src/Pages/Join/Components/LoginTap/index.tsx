@@ -21,8 +21,6 @@ const LoginTap = () => {
   const [emailstate, setEmailState] = useState<string>(state.NORMAL);
   const [pwstate, setPwState] = useState<string>(state.NORMAL);
   const [loginState, setLoginState] = useState<string>(state.NORMAL);
-
-  const [successMessage, setSuccessMessage] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const [email, setEmail] = useState<string>('');
@@ -31,7 +29,6 @@ const LoginTap = () => {
   const [flag, setFlag] = useState<boolean>(false);
   useEffect(() => {
     setToken(null);
-    console.log(`토큰 초기화${token}`);
   }, []);
 
   const changeEmailHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +43,6 @@ const LoginTap = () => {
   };
   const changePwHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwInput = e.target.value;
-    console.log(pwInput);
     if (!validatePw(pwInput)) {
       setPwState(state.STRERROR);
     } else {
@@ -58,7 +54,6 @@ const LoginTap = () => {
   //  로그인 button
   const clickLoginHandler = async () => {
     if (!(emailstate === state.SUCCESS && pwstate === state.SUCCESS)) {
-      console.log('다시');
       return;
     }
     try {
@@ -68,7 +63,6 @@ const LoginTap = () => {
       });
       setLoginState(state.SUCCESS);
       setToken(result.data.data);
-      console.log('토큰', result.data.data, token);
 
       setFlag(true);
     } catch (err: any) {
@@ -78,7 +72,6 @@ const LoginTap = () => {
     }
   };
   const agreeFn = () => {
-    console.log('확인');
     if (loginState === state.SUCCESS) navigate('/menu/maps');
     else setFlag(false);
     return flag;

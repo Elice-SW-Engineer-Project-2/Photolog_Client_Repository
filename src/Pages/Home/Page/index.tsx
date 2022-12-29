@@ -3,21 +3,19 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import * as S from './styled';
-import { useGetData, useFetchData } from '../hooks/useGetData';
+import { useFetchData } from '../hooks/useGetData';
 import { disableScroll, removeDisableScroll } from '../Utils';
 import { ReactComponent as Logo } from '../assets/logo.svg';
 import MapDemo from '../assets/map.gif';
 import Demo from '../assets/demo.gif';
-import CubeContainer from '../Components/Cube';
 import { DialogTest } from '../../Join/Components/LoginDialog/index';
 import { TOKEN } from '../../Join/Atoms';
 import { URL } from '../../../axiosInstance';
 
 const Intro = () => {
-  const [token, setToken] = useRecoilState(TOKEN);
+  const token = useRecoilState(TOKEN)[0];
   const [flag, setFlag] = useState(false);
   const disAgreeFn = () => {
-    console.log('취소');
     setFlag(false);
     return flag;
   };
@@ -127,8 +125,6 @@ const Intro = () => {
                       onClick={(e) => {
                         if (data) {
                           navigate(`/posts/${data[idx].id}`);
-                        } else {
-                          console.log(e);
                         }
                       }}
                     >

@@ -85,7 +85,6 @@ const LoginContent = (): JSX.Element => {
     setErrorMessage('');
 
     const pwInput = e.target.value;
-    console.log(pwInput);
     setpw(pwInput);
 
     if (!validatePw(pwInput)) {
@@ -97,9 +96,7 @@ const LoginContent = (): JSX.Element => {
   };
   //  로그인 button
   const clickLoginHandler = async () => {
-    console.log('현재', email, pw, emailstate, pwstate);
     if (!(emailstate === state.SUCCESS && emailstate === state.SUCCESS)) {
-      console.log('다시');
       return;
     }
     try {
@@ -110,14 +107,13 @@ const LoginContent = (): JSX.Element => {
       setLoginState(state.SUCCESS);
       setToken(result.data.data);
       setFlag(false);
-      console.log('url', window.location.pathname);
+
       navigate(
         window.location.pathname === `/`
           ? '/menu/maps'
           : window.location.pathname,
       ); //   인트로만 /menu/maps로 갑니다
     } catch (err: any) {
-      console.log('err', err.response.data.message);
       setLoginState(state.ERROR);
       setErrorMessage(err.response.data.message);
       // setEmail('');
@@ -264,7 +260,6 @@ export const DialogTest = (props: IDialogProps) => {
 const LoginDialog = () => {
   const [flag, setFlag] = useState(true);
   const disAgreeFn = () => {
-    console.log('취소');
     setFlag(false);
     return flag;
   };
