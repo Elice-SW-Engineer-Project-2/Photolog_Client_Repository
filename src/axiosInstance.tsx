@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const URL = 'http://34.64.34.184:5001';
+export const URL = `${process.env.REACT_APP_API_BASE_URL}`; // 'http://34.64.34.184:5001';
 // export const URL = `http://localhost:5001`;
 // export const URL = `http://localhost:5001`; // 'http://34.64.34.184:5001';
 

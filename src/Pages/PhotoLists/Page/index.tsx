@@ -5,6 +5,7 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import * as P from './styled';
+import { URL } from '../../../axiosInstance';
 import Spinner from '../../Home/Components/Spinner';
 import TopButton from '../Components/TopButton';
 
@@ -54,13 +55,11 @@ const PhotoLists = () => {
         const quantity = 30;
         if (endPostId === null) {
           // 첫 로딩 시 데이터 가져오기
-          response = await axios.get(
-            `${process.env.REACT_APP_API_BASE_URL}/posts?quantity=${quantity}`,
-          );
+          response = await axios.get(`${URL}/posts?quantity=${quantity}`);
         } else if (endPostId !== null) {
           // 스크롤 시 데이터 추가로 가져오기
           response = await axios.get(
-            `${process.env.REACT_APP_API_BASE_URL}/posts?quantity=${quantity}&endPostId=${endPostId}`,
+            `${URL}/posts?quantity=${quantity}&endPostId=${endPostId}`,
           );
         }
         const dataLength = response?.data.data.length;
@@ -100,7 +99,7 @@ const PhotoLists = () => {
   useEffect(() => {
     const fetchHashtagPosts = async () => {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/hashtags/posts?keyword=${hashtag}`,
+        `${URL}/hashtags/posts?keyword=${hashtag}`,
       );
       return response;
     };
