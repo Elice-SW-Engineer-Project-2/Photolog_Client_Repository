@@ -13,7 +13,7 @@ import { Header } from '../../../Components/Commons/Header';
 import * as S from '../../Post/Page/styled';
 import DeleteDialog from '../../../Components/Commons/Dialog';
 import { getUser } from '../../Edit/Utils';
-import defaultProfile from '../../assets/defaultProfile.svg';
+import defaultProfile from '../../Edit/assets/defaultProfile.svg';
 
 const PhotoPost = () => {
   const { postId } = useParams();

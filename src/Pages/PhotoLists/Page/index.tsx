@@ -4,6 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { useRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import * as P from './styled';
 import getRandomArbitrary from '../utils/getRandomArbitrary';
 import getRandomHashtags from '../utils/getRandomHashtags';
@@ -21,6 +22,8 @@ const PhotoLists = () => {
   const [endPostId, setEndPostId] = useState<number | null>(null);
   const [hashtag, setHashtag] = useState<string>('');
   const [hashPosts, setHashPosts] = useState<Array<object>>([]);
+
+  const navigate = useNavigate();
 
   // 충우님 header input 코드
   const enterKey = (e: any) => {
@@ -165,9 +168,7 @@ const PhotoLists = () => {
                         borderRadius: 8,
                       }}
                       onClick={() => {
-                        console.log(
-                          `여기서 ${picture.id}번 포스트 상세 페이지로 이동`,
-                        );
+                        navigate(`/post/${picture.id}`);
                       }}
                       role="presentation"
                     />
@@ -186,9 +187,7 @@ const PhotoLists = () => {
                     borderRadius: 8,
                   }}
                   onClick={() => {
-                    console.log(
-                      `여기서 ${post.id}번 포스트 상세 페이지로 이동`,
-                    );
+                    navigate(`/post/${post.id}`);
                   }}
                   role="presentation"
                 />
