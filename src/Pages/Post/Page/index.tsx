@@ -485,12 +485,20 @@ const PostPhoto = () => {
                   </S.CalendarWrapper>
                   <S.KaKaoMapWrapper>
                     <S.CurLoaction>
-                      <SelectMap
-                        userLatitude={userLatitude}
-                        userLongitude={userLongitude}
-                        setUserLatitude={setUserLatitude}
-                        setUserLongitude={setUserLongitude}
-                      />
+                      <div
+                        style={{
+                          width: '563px',
+                          height: '272px',
+                          overflow: 'hidden',
+                        }}
+                      >
+                        <SelectMap
+                          userLatitude={userLatitude}
+                          userLongitude={userLongitude}
+                          setUserLatitude={setUserLatitude}
+                          setUserLongitude={setUserLongitude}
+                        />
+                      </div>
                       <S.DescriptionInput ref={mapDesRef} />
                     </S.CurLoaction>
                   </S.KaKaoMapWrapper>

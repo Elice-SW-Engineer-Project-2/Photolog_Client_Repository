@@ -309,7 +309,6 @@ export const KaKaoMapWrapper = styled.div`
   height: 272px;
   margin-bottom: 30px;
   background-color: peru;
-  overflow: hidden;
 `;
 
 export const CalendarWrapper = styled.div`
@@ -325,7 +324,17 @@ export const DescriptionInput = styled.input.attrs({
   width: 563px;
   height: 30px;
   border: none;
-  background-color: transparent;
+  outline: none;
+  :focus {
+    border: none;
+    outlline: none;
+  }
+  :hover {
+    background-color: #f9f9f9;
+  }
+  ::placeholder {
+    padding-left: 4px;
+  }
 `;
 
 export const PostFooter = styled.div`
