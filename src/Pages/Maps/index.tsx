@@ -1,6 +1,7 @@
 import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import * as S from './styled';
 
 const URL = 'http://34.64.34.184:5001';
@@ -36,8 +37,9 @@ interface IBoundaryLocation {
 
 // [2022-12-19] 추후 실제 게시물페이지와 연동할 때 여기 이벤트를 수정해주면 된다.
 const Image = ({ src, alt, postId }: IImageProps) => {
+  const navigate = useNavigate();
   const handleImage = () => {
-    console.log(`${postId} 상세페이지로 이동`);
+    navigate(`/post/${postId}`);
   };
   return (
     <img
