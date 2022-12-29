@@ -3,26 +3,30 @@ import { ImageList, ImageListItem } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import * as P from './styled';
-import getRandomArbitrary from '../utils/getRandomArbitrary';
-import getRandomHashtags from '../utils/getRandomHashtags';
+// 데이터 밀어넣기 테스트용
+import { useRecoilState } from 'recoil';
 import { TOKEN } from '../../Join/Atoms';
+import getRandomHashtags from '../utils/getRandomHashtags';
+import getRandomArbitrary from '../utils/getRandomArbitrary';
+//
+import * as P from './styled';
 import { URL } from '../../../axiosInstance';
-
-// const URL = 'http://34.64.34.184:5001';
+import Spinner from '../../Home/Components/Spinner';
+import TopButton from '../Components/TopButton';
 
 const PhotoLists = () => {
   const [ref, inView] = useInView();
   const [items, setItems] = useState<Array<object>>([]);
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
-  const [token, setToken] = useRecoilState(TOKEN);
   const [isLast, setIsLast] = useState<boolean>(false);
   const [endPostId, setEndPostId] = useState<number | null>(null);
   const [hashtag, setHashtag] = useState<string>('');
   const [hashPosts, setHashPosts] = useState<Array<object>>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  // 데이터 밀어넣기 테스트용
+  const [token, setToken] = useRecoilState(TOKEN);
 
   const navigate = useNavigate();
 
@@ -38,6 +42,16 @@ const PhotoLists = () => {
     return () => {
       searchInput?.removeEventListener('keyup', enterKey);
     };
+  }, []);
+
+  // 페이지 진입 시 로딩 스피너
+  useEffect(() => {
+    const loadingCount = async () => {
+      await setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    };
+    loadingCount();
   }, []);
 
   const getItems = useCallback(async () => {
@@ -59,13 +73,12 @@ const PhotoLists = () => {
         const dataLength = response?.data.data.length;
         if (dataLength < quantity) {
           setIsLast(true);
-        } else {
-          setEndPostId(response?.data.data[dataLength - 1].id);
         }
         if (response?.statusText === 'OK') {
           pictureData = response?.data.data;
           setItems((prevState) => [...prevState, pictureData]);
         }
+        setEndPostId(response?.data.data[dataLength - 1].id);
       } catch (err) {
         console.error('api요청에러: ', err);
       }
@@ -152,51 +165,62 @@ const PhotoLists = () => {
   };
 
   return (
-    <P.Container>
-      {/* <button onClick={handleTempPostButton}>post 밀어넣기 임시 버튼</button> */}
-      <ImageList variant="masonry" cols={6} gap={16}>
-        {hashtag === ''
-          ? items.map((item: any): any => (
-              <React.Fragment key={uuidv4()}>
-                {item.map((picture: any): any => (
-                  <ImageListItem key={picture.id}>
+    <>
+      {isLoading ? (
+        <>
+          <Spinner />
+        </>
+      ) : (
+        <P.Container>
+          {/* <button onClick={handleTempPostButton}>
+            post 밀어넣기 임시 버튼
+          </button> */}
+          <ImageList variant="masonry" cols={6} gap={16}>
+            {hashtag === ''
+              ? items.map((item: any): any => (
+                  <React.Fragment key={uuidv4()}>
+                    {item.map((picture: any): any => (
+                      <ImageListItem key={picture.id}>
+                        <img
+                          src={`${picture.images[0].imageUrl.url}?w=248`}
+                          srcSet={`${picture.images[0].imageUrl.url}?w=248`}
+                          alt={picture.title}
+                          loading="lazy"
+                          style={{
+                            borderRadius: 8,
+                          }}
+                          onClick={() => {
+                            navigate(`/post/${picture.id}`);
+                          }}
+                          role="presentation"
+                        />
+                      </ImageListItem>
+                    ))}
+                  </React.Fragment>
+                ))
+              : hashPosts.map((post: any): any => (
+                  <ImageListItem key={post.id}>
                     <img
-                      src={`${picture.images[0].imageUrl.url}?w=248&fit=crop&auto=format`}
-                      srcSet={`${picture.images[0].imageUrl.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                      alt={picture.title}
+                      src={`${post.images[0].imageUrl.url}?w=248`}
+                      srcSet={`${post.images[0].imageUrl.url}?w=248`}
+                      alt={post.title}
                       loading="lazy"
                       style={{
                         borderRadius: 8,
                       }}
                       onClick={() => {
-                        navigate(`/post/${picture.id}`);
+                        navigate(`/post/${post.id}`);
                       }}
                       role="presentation"
                     />
                   </ImageListItem>
                 ))}
-              </React.Fragment>
-            ))
-          : hashPosts.map((post: any): any => (
-              <ImageListItem key={post.id}>
-                <img
-                  src={`${post.images[0].imageUrl.url}?w=248&fit=crop&auto=format`}
-                  srcSet={`${post.images[0].imageUrl.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                  alt={post.title}
-                  loading="lazy"
-                  style={{
-                    borderRadius: 8,
-                  }}
-                  onClick={() => {
-                    navigate(`/post/${post.id}`);
-                  }}
-                  role="presentation"
-                />
-              </ImageListItem>
-            ))}
-      </ImageList>
-      <div ref={ref} style={{ height: '100px' }} />
-    </P.Container>
+          </ImageList>
+          <div ref={ref} style={{ height: '100px' }} />
+          <TopButton />
+        </P.Container>
+      )}
+    </>
   );
 };
 

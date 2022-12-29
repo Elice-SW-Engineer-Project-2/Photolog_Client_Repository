@@ -31,5 +31,5 @@ export const HashTagStyle = styled.div`
   font-size: 14px;
   padding: 10px 20px;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-bottom: 35px;
 `;
