@@ -36,6 +36,7 @@ const HeaderNonLogin = () => {
       <S.HeaderContainer scrollX={window.scrollX} animationOff>
         <S.Logo>
           <Logo
+            style={{ cursor: 'pointer' }}
             onClick={() => {
               navigate('/');
             }}

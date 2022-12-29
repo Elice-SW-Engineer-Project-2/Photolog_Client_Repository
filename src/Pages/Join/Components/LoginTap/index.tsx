@@ -71,11 +71,10 @@ const LoginTap = () => {
       });
       setLoginState(state.SUCCESS);
       setToken(result.data.data);
-
       setFlag(true);
     } catch (err: any) {
       setLoginState(state.ERROR);
-      setErrorMessage(err.response.data.message);
+      setErrorMessage('로그인에 실패했습니다, 정보를 확인해주세요.');
       setFlag(true);
     }
   };

@@ -26,6 +26,7 @@ import {
   warningEmail,
   warningPw,
   state,
+  IsLoginDialog,
 } from '../../Utils';
 import { ReactComponent as Favicon } from './favicon.svg';
 
@@ -101,9 +102,19 @@ const LoginContent = (): JSX.Element => {
     }
     if (pwInput === '') setPwState(state.NORMAL);
   };
+  const agreeFn = () => {
+    if (loginState === state.SUCCESS) {
+      navigate(
+        window.location.pathname === `/`
+          ? '/menu/maps'
+          : window.location.pathname,
+      ); //   인트로만 /menu/maps로 갑니다
+    } else setFlag(false);
+    return flag;
+  };
   //  로그인 button
   const clickLoginHandler = async () => {
-    if (!(emailstate === state.SUCCESS && emailstate === state.SUCCESS)) {
+    if (!(emailstate === state.SUCCESS && pwstate === state.SUCCESS)) {
       return;
     }
     try {
@@ -113,18 +124,10 @@ const LoginContent = (): JSX.Element => {
       });
       setLoginState(state.SUCCESS);
       setToken(result.data.data);
-      setFlag(false);
-
-      navigate(
-        window.location.pathname === `/`
-          ? '/menu/maps'
-          : window.location.pathname,
-      ); //   인트로만 /menu/maps로 갑니다
+      setFlag(true);
     } catch (err: any) {
       setLoginState(state.ERROR);
-      setErrorMessage(err.response.data.message);
-      // setEmail('');
-      // setpw('');
+      setErrorMessage('로그인에 실패했습니다, 정보를 확인해주세요.');
       setFlag(true);
     }
   };
@@ -179,7 +182,7 @@ const LoginContent = (): JSX.Element => {
       <S.Button className="login-button" onClick={clickLoginHandler}>
         로그인
       </S.Button>
-      <div>{errorMessage}</div>
+      {/* <div>{errorMessage}</div> */}
       <div style={{ marginTop: '60px', display: 'flex', gap: '50px' }}>
         <S.StyledP
           onClick={() => {
@@ -196,6 +199,14 @@ const LoginContent = (): JSX.Element => {
           비밀번호 찾기
         </S.StyledP>
       </div>
+      {flag ? (
+        <IsLoginDialog
+          flag={flag}
+          tapstate={loginState}
+          errorMessage={errorMessage}
+          agreeFn={agreeFn}
+        />
+      ) : null}
     </div>
   );
 };
@@ -207,8 +218,8 @@ export const DialogTest = (props: IDialogProps) => {
     sizeW: string | undefined;
     sizeH: string | undefined;
   }>({
-    sizeW: '500px',
-    sizeH: '600px',
+    sizeW: '480px',
+    sizeH: '560px',
   });
 
   useEffect(() => {
@@ -228,8 +239,8 @@ export const DialogTest = (props: IDialogProps) => {
   };
   const dialogStyle = {
     sx: {
-      width: dialogSize.sizeW,
-      height: dialogSize.sizeH,
+      width: '530px',
+      height: '770px',
       borderRadius: '25px',
       padding: '40px',
     },
