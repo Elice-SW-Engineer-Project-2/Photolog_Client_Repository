@@ -3,7 +3,7 @@ import Calendar from 'react-calendar';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import React, { useState, useEffect, useRef } from 'react';
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FaCameraRetro, FaMapMarkerAlt } from 'react-icons/fa';
 import { RiCameraLensFill } from 'react-icons/ri';
 import { useRecoilState } from 'recoil';
@@ -20,6 +20,7 @@ import { accessClient } from '../../../axiosInstance';
 const PhotoPost = () => {
   const { postId } = useParams();
   const token = useRecoilState(TOKEN)[0];
+  const navigate = useNavigate();
 
   const { data, isLoading } = useQuery<any>(
     'postData',
@@ -70,8 +71,15 @@ const PhotoPost = () => {
     return createFlag;
   };
 
+  const handleDeletePost = async () => {
+    await accessClient(token)
+      .delete(`/posts/${postId}`)
+      .then(() => navigate('/menu/photolists'));
+  };
+
   // 삭제 Dialog Fn
   const agreeFn = () => {
+    handleDeletePost();
     setDeleteFlag(false);
     return deleteFlag;
   };
