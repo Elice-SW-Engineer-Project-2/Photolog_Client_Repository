@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { URL } from '../../../axiosInstance';
 
 export const getPresignedURL: any = async (file: any) => {
   const form: any = new FormData();

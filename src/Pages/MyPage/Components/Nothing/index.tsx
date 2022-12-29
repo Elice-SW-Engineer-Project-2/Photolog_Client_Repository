@@ -14,7 +14,11 @@ const Nothing = () => (
   >
     <NothingSVG />
     <p>사진이 없습니다</p>
-    <p style={{ whiteSpace: 'nowrap' }}>
+    <p
+      style={{
+        whiteSpace: 'nowrap',
+      }}
+    >
       사진을 올려 다른 사람들과 공유해보세요
     </p>
   </div>

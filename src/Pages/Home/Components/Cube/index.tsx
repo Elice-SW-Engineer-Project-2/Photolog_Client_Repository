@@ -5,6 +5,7 @@ import { Box, OrbitControls } from '@react-three/drei';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styled';
 import { useFetchData, useGetData } from '../../hooks/useGetData';
+import { URL } from '../../../../axiosInstance';
 
 interface ICubeProps {
   objectURL?: string[];
@@ -31,12 +32,6 @@ const Cube = ({ objectURL, handler, setIndex }: ICubeProps) => {
   const texture3 = loader.load(`${objectURL![3]}?not-from-cache-please`);
   const texture4 = loader.load(`${objectURL![4]}?not-from-cache-please`);
   const texture5 = loader.load(`${objectURL![5]}?not-from-cache-please`);
-  // const texture0 = loader.load(objectURL![0]);
-  // const texture1 = loader.load(objectURL![1]);
-  // const texture2 = loader.load(objectURL![2]);
-  // const texture3 = loader.load(objectURL![3]);
-  // const texture4 = loader.load(objectURL![4]);
-  // const texture5 = loader.load(objectURL![5]);
   return (
     <mesh ref={cube as any}>
       <Box
@@ -72,11 +67,13 @@ const Scene = ({ objectURL, handler, setIndex }: ICubeProps) => (
 );
 
 const CubeContainer: React.FC = () => {
-  const data = useFetchData('http://34.64.34.184:5001/posts?quantity=13');
+  const data0 = useFetchData(`${URL}/posts/223`);
+  const data1 = useFetchData(`${URL}/posts/218`);
+  const data2 = useFetchData(`${URL}/posts/222`);
   let post: any;
   let objectURL;
-  if (data) {
-    post = [data[0], data[1], data[2], data[5], data[10], data[11]];
+  if (data1 && data0 && data2) {
+    post = [data0, data1, data2, data0, data1, data2];
     objectURL = post?.map((d: any) => d.images[0].imageUrl.url);
   }
   const [isPopupOn, setIsPopupOn] = useState<boolean>(false);
@@ -173,7 +170,9 @@ const CubeContainer: React.FC = () => {
               backgroundcolor="#07b8b8"
               hoverbackgroundcolor="#00a8a7"
               onClick={() => {
-                navigate(`/posts/${post[index].id}`);
+                if (index === 0 || index === 3) navigate(`/post/231`);
+                if (index === 1 || index === 4) navigate(`/post/231`);
+                if (index === 2 || index === 5) navigate(`/post/231`);
               }}
             >
               게시글 보러가기
