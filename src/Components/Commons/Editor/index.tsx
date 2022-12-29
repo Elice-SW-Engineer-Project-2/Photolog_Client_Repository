@@ -1,12 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useMemo,
-  useCallback,
-  useEffect,
-  SetStateAction,
-} from 'react';
-import axios from 'axios';
+import React, { useState, useMemo, useEffect, SetStateAction } from 'react';
 import EXIF from 'exif-js';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
