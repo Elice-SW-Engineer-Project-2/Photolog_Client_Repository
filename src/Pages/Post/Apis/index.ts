@@ -2,11 +2,12 @@ import axios from 'axios';
 
 export const getPresignedURL: any = async (file: any) => {
   const form: any = new FormData();
-
   const s3BucketURL = 'https://photolog-bucket.s3.amazonaws.com/';
 
+  const fileType = file.type.split('/')[1];
+
   const fieldsData = await axios
-    .get(`http://34.64.34.184:5001/photos/presigned-url?filetype=${file.name}`)
+    .get(`http://34.64.34.184:5001/photos/presigned-url?filetype=${fileType}`)
     .then(async ({ data: { data } }) => {
       Object.keys(data.fields).forEach((key) => {
         form.append(key, data.fields[key]);
