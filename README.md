@@ -1,4 +1,4 @@
-## 📍nbsp;nbspGetting Stated
+## 📍&nbsp;&nbsp;Getting Stated
 
 - git clone 명령어
 
